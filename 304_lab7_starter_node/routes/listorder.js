@@ -11,25 +11,34 @@ router.get('/', function(req, res) {
         try {
             let pool = await sql.connect(dbConfig);
 
-            let sqlQuery = "SELECT * FROM product";
+            let sqlQuery = "SELECT * FROM ordersummary";
             let results = await pool.request()
                 .query(sqlQuery);
-            console.dir(results)
 
             res.write("<table>" +
                 "<tr>" +
-                    "<th>Product Name</th>" +
-                    "<th>Category ID</th>" +
-                    "<th>Product Description</th>" +
-                    "<th>Price</th>" +
+                    "<th>Order Id</th>" +
+                    "<th>Order Date</th>" +
+                    "<th>Total Amount</th>" +
+                    "<th>Address</th>" +
+                    "<th>City</th>" +
+                    "<th>State</th>" +
+                    "<th>Postal Code</th>" +
+                    "<th>Country</th>" +
+                    "<th>Customer Id</th>" +
                 "</tr>");
-            for(let i = 0; i<results.length; i++) {
-                let result = results[i];
+            for(let i = 0; i<results.recordset.length; i++) {
+                let result = results.recordset[i];
                 res.write("<tr>" +
-                    "<td>" + result.productName + "</td>" +
-                    "<td>" + result.categoryId + "</td>" +
-                    "<td>" + result.productDesc + "</td>" +
-                    "<td>" + result.productPrice + "</td>" +
+                    "<td>" + result.orderId + "</td>" +
+                    "<td>" + result.orderDate + "</td>" +
+                    "<td>" + result.totalAmount + "</td>" +
+                    "<td>" + result.shiptoAddress + "</td>" +
+                    "<td>" + result.shiptoCity + "</td>" +
+                    "<td>" + result.shiptoState + "</td>" +
+                    "<td>" + result.shiptoPostalCode + "</td>" +
+                    "<td>" + result.shiptoCountry + "</td>" +
+                    "<td>" + result.customerId + "</td>" +
                     "</tr>");
             }
             res.write("</table>");
@@ -38,6 +47,7 @@ router.get('/', function(req, res) {
             console.dir(err);
             res.write(err);
         }
+        res.end();
     })();
 
     /** Create connection, and validate that it connected successfully **/
