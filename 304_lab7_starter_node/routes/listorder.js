@@ -6,40 +6,62 @@ const moment = require('moment');
 router.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     res.write('<title>Electric Lettuce Order List</title>');
+    let query1 = "SELECT * FROM ordersummary";
+    let query2 = "SELECT productId, quantity, price FROM orderproduct WHERE orderId = ";
+    let query3 = "SELECT firstName, lastName FROM customer WHERE customerId = ";
+    let formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: '2'
+    });
 
     (async function() {
         try {
             let pool = await sql.connect(dbConfig);
 
-            let sqlQuery = "SELECT * FROM ordersummary";
             let results = await pool.request()
-                .query(sqlQuery);
+                .query(query1);
 
             res.write("<table>" +
                 "<tr>" +
                     "<th>Order Id</th>" +
                     "<th>Order Date</th>" +
-                    "<th>Total Amount</th>" +
-                    "<th>Address</th>" +
-                    "<th>City</th>" +
-                    "<th>State</th>" +
-                    "<th>Postal Code</th>" +
-                    "<th>Country</th>" +
                     "<th>Customer Id</th>" +
+                    "<th>Customer Name</th>" +
+                    "<th>Total Amount</th>" +
                 "</tr>");
             for(let i = 0; i<results.recordset.length; i++) {
                 let result = results.recordset[i];
+                let nameResults = await pool.request()
+                    .query(query3 + result.customerId);
+                let name = nameResults.recordset[0];
                 res.write("<tr>" +
                     "<td>" + result.orderId + "</td>" +
                     "<td>" + result.orderDate + "</td>" +
-                    "<td>" + result.totalAmount + "</td>" +
-                    "<td>" + result.shiptoAddress + "</td>" +
-                    "<td>" + result.shiptoCity + "</td>" +
-                    "<td>" + result.shiptoState + "</td>" +
-                    "<td>" + result.shiptoPostalCode + "</td>" +
-                    "<td>" + result.shiptoCountry + "</td>" +
                     "<td>" + result.customerId + "</td>" +
+                    "<td>" + name.firstName + " " + name.lastName +"</td>" +
+                    "<td>" + formatter.format(result.totalAmount) + "</td>" +
                     "</tr>");
+                res.write("<tr>" +
+                    "<th></th>" +
+                    "<th></th>" +
+                    "<th>Product Id</th>" +
+                    "<th>Quantity</th>" +
+                    "<th>Price</th>" +
+                    "</tr>");
+                let productResults = await pool.request()
+                .query(query2 + result.orderId);
+                for(let j = 0; j<productResults.recordset.length; j++) {
+                    let product = productResults.recordset[j];
+                    res.write("<tr>" +
+                    "<td></td>" +
+                    "<td></td>" +
+                    "<td>" + product.productId + "</td>" +
+                    "<td>" + product.quantity + "</td>" +
+                    "<td>" + formatter.format(product.price) + "</td>" +
+                    "</tr>");
+                }
+
             }
             res.write("</table>");
         }
