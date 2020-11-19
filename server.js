@@ -16,7 +16,7 @@ const app = express();
 dbConfig = {
   user: 'SA',
   password: 'YourStrong@Passw0rd',
-  server: 'localhost',
+  server: 'db',
   database: 'tempdb',
   options: {
     'enableArithAbort': true,
