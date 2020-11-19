@@ -3,31 +3,30 @@ const router = express.Router();
 const sql = require('mssql');
 
 router.get('/', function(req, res, next) {
-    res.setHeader('Content-Type', 'text/html');
-    res.write("<title>YOUR NAME Grocery</title>")
 
     // Get the product name to search for
     let name = req.query.productName;
-    
-    /** $name now contains the search string the user entered
-     Use it to build a query and print out the results. **/
 
-    /** Create and validate connection **/
+    let query;
+    if (typeof(name) == 'undefined') {
+        query = "SELECT * FROM product";
+    }
+    else{
+        query = `SELECT * FROM product WHERE productName LIKE '%${name}%'`;
+    }
 
-    /** Print out the ResultSet **/
 
-    /** 
-    For each product create a link of the form
-    addcart?id=<productId>&name=<productName>&price=<productPrice>
-    **/
+    (async function f() {
+        let pool = await sql.connect(dbConfig);
 
-    /**
-        Useful code for formatting currency:
-        let num = 2.89999;
-        num = num.toFixed(2);
-    **/
+        let result = await pool.request().query(query);
 
-    res.end();
+        res.render('listprod', {
+            title: "Products",
+            products: result.recordset
+        });
+
+    })();
 });
 
 module.exports = router;

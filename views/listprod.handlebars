@@ -1,0 +1,28 @@
+<div class="my-3">
+    <form class="form-inline my-2 my-lg-0" method="get">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="productName">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <td>#</td>
+        <td>Product&nbspName</td>
+        <td>Price</td>
+        <td>Action</td>
+    </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+            <tr>
+                <td>{{addOne @index}}</td>
+                <td>{{this.productName}}</td>
+                <td>{{fixed this.productPrice 2}}$</td>
+                <td>
+                    <a href="/addcart?id={{this.productId}}&name={{this.productName}}&price={{this.productPrice}}" class="btn btn-primary">Add to Shopping Cart</a>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

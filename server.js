@@ -1,6 +1,6 @@
 const express = require('express');
-const exphbs = require('express-handlebars');
-const session = require('express-session')
+const hbs = require('./utils/express-handlebars');
+const session = require('express-session');
 
 let loadData = require('./routes/loaddata');
 let listOrder = require('./routes/listorder');
@@ -16,13 +16,13 @@ const app = express();
 dbConfig = {
   user: 'SA',
   password: 'YourStrong@Passw0rd',
-  server: 'db',
+  server: 'localhost',
   database: 'tempdb',
   options: {
     'enableArithAbort': true,
     'encrypt': false,
   }
-}
+};
 
 // Setting up the session.
 // This uses MemoryStorage which is not
@@ -36,10 +36,10 @@ app.use(session({
     secure: false,
     maxAge: 60000,
   }
-}))
+}));
 
 // Setting up the rendering engine
-app.engine('handlebars', exphbs());
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // Setting up Express.js routes.
@@ -58,7 +58,7 @@ app.get('/', function (req, res) {
   res.render('index', {
     title: "Electric Lettuce"
   });
-})
+});
 
 // Starting our Express app
-app.listen(3000)
+app.listen(3000);
