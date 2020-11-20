@@ -19,6 +19,10 @@ router.get('/', function (req, res, next) {
         return;
     }
 
+    productList = productList.filter(function (el) {
+        return el != null;
+    });
+
     let customerId = false;
     let customerPass = false;
 
@@ -41,26 +45,43 @@ router.get('/', function (req, res, next) {
         let totalAmount = 0;
         for (let i = 0; i < productList.length; i++) {
             if (productList[i] == null) continue;
+            productList[i].price = parseFloat(productList[i].price);
             totalAmount += productList[i].price * productList[i].quantity;
+            productList[i].totalAmount = totalAmount;
         }
 
         (async function f() {
             let pool = await sql.connect(dbConfig);
 
             // Create order summary
-            const query = `INSERT INTO ordersummary (orderDate, totalAmount, customerId) VALUES ('${date}', ${totalAmount}, ${customerId}); SELECT SCOPE_IDENTITY();`;
-            let result = await pool.request().query(query);
+            const query = `INSERT INTO ordersummary (orderDate, totalAmount, customerId) VALUES (@date, @totalAmount, @customerId); SELECT SCOPE_IDENTITY();`;
+            let result = await pool.request()
+                .input('date', sql.DateTime, time)
+                .input('totalAmount', sql.Int, totalAmount)
+                .input('customerId', sql.Int, customerId)
+                .query(query);
             let orderSummaryId = result.recordset[0][''];
 
             // Create order products
             for (let i = 0; i < productList.length; i++) {
                 if (productList[i] == null) continue;
-                const query = `INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (${orderSummaryId}, ${productList[i].id}, ${productList[i].quantity}, ${productList[i].price*productList[i].quantity})`;
-                let result = await pool.request().query(query);
+                const query = `INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (@orderId, @productId, @quantity, @price)`;
+                let result = await pool.request()
+                    .input('orderId', sql.Int, orderSummaryId)
+                    .input('productId', sql.Int, productList[i].id)
+                    .input('quantity', sql.Int, productList[i].quantity)
+                    .input('price', sql.Int, productList[i].price*productList[i].quantity)
+                    .query(query);
             }
+
+            req.session.productList = [];
+            res.render('order', {
+                productList: productList,
+                orderId: orderSummaryId,
+                userId: customerId,
+            });
         })();
 
-        res.render('order')
     });
 
     /**

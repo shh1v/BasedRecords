@@ -1,1 +1,31 @@
 <div class="alert alert-success">Order Submitted Successfully</div>
+
+<h1>Order Summary</h1>
+<div>
+    Your order reference number: {{orderId}}
+</div>
+<div>
+    Shipping to customer: {{userId}}
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Product&nbspID</th>
+        <th>Product&nbspName</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each productList}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>{{quantity}}</td>
+            <td>${{fixed price 2}}</td>
+            <td>${{fixed totalAmount 2}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
