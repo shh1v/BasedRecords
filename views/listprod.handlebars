@@ -8,7 +8,7 @@
     <thead>
     <tr>
         <td>#</td>
-        <td>Product&nbspName</td>
+        <td class="col">Product&nbspName</td>
         <td>Price</td>
         <td>Action</td>
     </tr>
@@ -20,7 +20,7 @@
                 <td>{{this.productName}}</td>
                 <td>{{fixed this.productPrice 2}}$</td>
                 <td>
-                    <a href="/addcart?id={{this.productId}}&name={{this.productName}}&price={{this.productPrice}}" class="btn btn-primary">Add to Shopping Cart</a>
+                    <a href="/addcart?id={{this.productId}}&name={{this.productName}}&price={{this.productPrice}}" class="btn btn-outline-primary">Add to Shopping Cart</a>
                 </td>
             </tr>
         {{/each}}
