@@ -5,8 +5,8 @@ const moment = require('moment');
 
 router.get('/', function(req, res) {
     let query1 = "SELECT * FROM ordersummary";
-    let query2 = "SELECT productId, quantity, price FROM orderproduct WHERE orderId = ";
-    let query3 = "SELECT firstName, lastName FROM customer WHERE customerId = ";
+    let query2 = "SELECT productId, quantity, price FROM orderproduct WHERE orderId = @orderId";
+    let query3 = "SELECT firstName, lastName FROM customer WHERE customerId = @customerId";
 
     (async function() {
         try {
@@ -21,14 +21,17 @@ router.get('/', function(req, res) {
 
                 // Name Query
                 let nameResults = await pool.request()
-                    .query(query3 + result.customerId);
+                    .input('customerId', sql.Int, result.customerId)
+                    .query(query3);
                 let name = nameResults.recordset[0];
                 result.firstName = name.firstName;
                 result.lastName = name.lastName;
 
 
                 result.products = [];
-                let productResults = await pool.request().query(query2 + result.orderId);
+                let productResults = await pool.request()
+                    .input('orderId', sql.Int, result.orderId)
+                    .query(query2);
                 for(let j = 0; j<productResults.recordset.length; j++) {
                     let product = productResults.recordset[j];
                     result.products.push(product);

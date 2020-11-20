@@ -12,14 +12,16 @@ router.get('/', function(req, res, next) {
         query = "SELECT * FROM product";
     }
     else{
-        query = `SELECT * FROM product WHERE productName LIKE '%${name}%'`;
+        query = `SELECT * FROM product WHERE productName LIKE '%'+@name+'%'`;
     }
 
 
     (async function f() {
         let pool = await sql.connect(dbConfig);
 
-        let result = await pool.request().query(query);
+        let result = await pool.request()
+            .input('name', sql.VarChar, name)
+            .query(query);
 
         res.render('listprod', {
             title: "Products",
