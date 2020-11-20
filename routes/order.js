@@ -19,6 +19,10 @@ router.get('/', function (req, res, next) {
         return;
     }
 
+    productList = productList.filter(function (el) {
+        return el != null;
+    });
+
     let customerId = false;
     let customerPass = false;
 
@@ -41,7 +45,9 @@ router.get('/', function (req, res, next) {
         let totalAmount = 0;
         for (let i = 0; i < productList.length; i++) {
             if (productList[i] == null) continue;
+            productList[i].price = parseFloat(productList[i].price);
             totalAmount += productList[i].price * productList[i].quantity;
+            productList[i].totalAmount = totalAmount;
         }
 
         (async function f() {
@@ -58,9 +64,15 @@ router.get('/', function (req, res, next) {
                 const query = `INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (${orderSummaryId}, ${productList[i].id}, ${productList[i].quantity}, ${productList[i].price*productList[i].quantity})`;
                 let result = await pool.request().query(query);
             }
+
+            req.session.productList = [];
+            res.render('order', {
+                productList: productList,
+                orderId: orderSummaryId,
+                userId: customerId,
+            });
         })();
 
-        res.render('order')
     });
 
     /**
