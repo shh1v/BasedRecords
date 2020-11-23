@@ -38,7 +38,6 @@ router.get('/', function(req, res) {
                 }
                 orders.push(result);
             }
-            console.dir(orders);
             res.render('listorder', {
                 orders: orders,
                 title: "Electric Lettuce Order List",
