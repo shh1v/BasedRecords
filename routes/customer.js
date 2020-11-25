@@ -5,13 +5,11 @@ const auth = require('../auth');
 
 router.get('/', function(req, res, next) {
 
-    res.setHeader('Content-Type', 'text/html');
     // Use auth.js to check if authenticated. If true, set username = authenticatedUser from session
     let username;
     if(auth.checkAuthentication)
-    username = req.session.authenticatedUser;
+        username = req.session.authenticatedUser;
     // TODO: Print Customer information
-    
     (async function() {
         try {
 	    // Select all fields where userid is the authenticated user
@@ -22,9 +20,9 @@ router.get('/', function(req, res, next) {
             .query(query);
 
 	    // Render customer.handlebars, set title, store query result
-            res.render('customer', {
+            res.render('customers', {
                 title: 'Customer Page',
-                info: result.recordSet
+                info: result.recordset
             });
 	// TODO: Print customer info
         } catch(err) {
