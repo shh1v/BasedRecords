@@ -6,26 +6,25 @@ router.get('/', function (req, res, next) {
     // Get product id
     let productId = req.query.id;
 
-
-    const query = "SELECT * FROM product WHERE productId = id";
+    const query = "SELECT * FROM product WHERE productId = @id";
     // noinspection BadExpressionStatementJS
     (async function() {
         try {
             let pool = await sql.connect(dbConfig);
 
             let result = await pool.request()
-            .input('productId', sql.Int, productId)
+            .input('id', sql.Int, productId)
             .query(query);
 
             res.render('product', {
                 title: 'Product Details',
-                product: result.recordset
+                product: result.recordset[0]
             });
         } catch (e) {
             console.dir(e);
         }
 
-    });
+    })();
     // Get product name to search for
     // TODO: Retrieve and display info for the product
 
@@ -34,6 +33,6 @@ router.get('/', function (req, res, next) {
     // TODO: Retrieve any image stored directly in database. Note: Call displayImage.jsp with product id as parameter.
 
     // TODO: Add links to Add to Cart and Continue Shopping
-})();
+});
 
 module.exports = router;
