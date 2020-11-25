@@ -9,6 +9,8 @@ let addCart = require('./routes/addcart');
 let showCart = require('./routes/showcart');
 let checkout = require('./routes/checkout');
 let order = require('./routes/order');
+let product = require('./routes/product');
+let displayImage = require('./routes/displayImage');
 
 const app = express();
 
@@ -52,6 +54,9 @@ app.use('/addcart', addCart);
 app.use('/showcart', showCart);
 app.use('/checkout', checkout);
 app.use('/order', order);
+app.use('/product', product);
+app.use('/displayimage', displayImage);
+app.use(express.static('public/'));
 
 // Rendering the main page
 app.get('/', function (req, res) {
