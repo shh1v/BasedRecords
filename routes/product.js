@@ -7,7 +7,6 @@ router.get('/', function (req, res, next) {
     let productId = req.query.id;
 
     const query = "SELECT * FROM product WHERE productId = @id";
-    // noinspection BadExpressionStatementJS
     (async function() {
         try {
             let pool = await sql.connect(dbConfig);
@@ -25,14 +24,6 @@ router.get('/', function (req, res, next) {
         }
 
     })();
-    // Get product name to search for
-    // TODO: Retrieve and display info for the product
-
-    // TODO: If there is a productImageURL, display using IMG tag
-
-    // TODO: Retrieve any image stored directly in database. Note: Call displayImage.jsp with product id as parameter.
-
-    // TODO: Add links to Add to Cart and Continue Shopping
 });
 
 module.exports = router;
