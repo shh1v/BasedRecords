@@ -12,6 +12,11 @@ let order = require('./routes/order');
 let customer = require('./routes/customer');
 let product = require('./routes/product');
 let displayImage = require('./routes/displayImage');
+let admin = require('./routes/admin');
+let login = require('./routes/login');
+let logout = require('./routes/logout');
+let index = require('./routes/index');
+let validateLogin = require('./routes/validateLogin');
 
 const app = express();
 
@@ -58,6 +63,11 @@ app.use('/order', order);
 app.use('/customer', customer);
 app.use('/product', product);
 app.use('/displayimage', displayImage);
+app.use('/admin', admin);
+app.use('/login', login);
+app.use('/logout', logout);
+app.use('/validateLogin', validateLogin);
+app.use('/', index);
 app.use(express.static('public/'));
 
 // Rendering the main page
