@@ -7,8 +7,20 @@ router.get('/', function(req, res, next) {
 
     // Use auth.js to check if authenticated. If true, set username = authenticatedUser from session
     let username;
-    if(auth.checkAuthentication)
+    let failed = false;
+    if(auth.checkAuthentication) {
         username = req.session.authenticatedUser;
+    } else {
+        failed = true;
+    }
+
+    if (failed) {
+        res.render('customers', {
+                title: 'Customer is not Logged In',
+                failed: 'You are currently not logged in.'
+            });
+    }
+
     // TODO: Print Customer information
     (async function() {
         try {
