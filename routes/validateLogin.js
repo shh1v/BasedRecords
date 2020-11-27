@@ -20,19 +20,18 @@ async function validateLogin(req) {
     if (!req.body || !req.body.username || !req.body.password) {
         return false;
     }
-
     let username = req.body.username;
     let password = req.body.password;
-    let query = "SELECT customerId FROM customer WHERE userid=@username AND password=@password"
+    let query = "SELECT customerId FROM customer WHERE userid = @username AND password = @password"
     let authenticatedUser = await (async function () {
         try {
             let pool = await sql.connect(dbConfig);
             let result = await pool.request()
-                .input(['username', 'password'], [sql.Varchar, sql.Varchar], [username, password])
-                .query(query)
+                .input('username', sql.VarChar, username)
+                .input('password', sql.VarChar, password)
+                .query(query);
             // TODO: Check if userId and password match some customer account.
             // If so, set authenticatedUser to be the username.
-            console.dir(result);
             if (result.recordset[0]) {
                 return true;
             } else {

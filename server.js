@@ -53,6 +53,8 @@ app.set('view engine', 'handlebars');
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
 // Eg: http://127.0.0.1/loaddata
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use('/loaddata', loadData);
 app.use('/listorder', listOrder);
 app.use('/listprod', listProd);
