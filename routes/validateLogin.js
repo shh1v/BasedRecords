@@ -22,8 +22,8 @@ async function validateLogin(req) {
     }
     let username = req.body.username;
     let password = req.body.password;
-    let query = "SELECT customerId FROM customer WHERE userid = @username AND password = @password"
-    let authenticatedUser = await (async function () {
+    let query = "SELECT customerId FROM customer WHERE userid = @username AND password = @password";
+    return await (async function () {
         try {
             let pool = await sql.connect(dbConfig);
             let result = await pool.request()
@@ -33,6 +33,7 @@ async function validateLogin(req) {
             // TODO: Check if userId and password match some customer account.
             // If so, set authenticatedUser to be the username.
             if (result.recordset[0]) {
+                req.session.authenticatedUser = username;
                 return true;
             } else {
                 return false;
@@ -43,7 +44,6 @@ async function validateLogin(req) {
             return false;
         }
     })();
-    return authenticatedUser;
 }
 
 module.exports = router;

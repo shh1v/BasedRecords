@@ -1,11 +1,10 @@
 const express = require('express');
-const auth = require("../auth");
 const router = express.Router();
 
 // Rendering the main page
 router.get('/', function (req, res) {
     let username;
-    if(auth.checkAuthentication(req, res)){
+    if(req.session.authenticatedUser){
         username = req.session.authenticatedUser;
     } else {
         username = '';
@@ -15,6 +14,6 @@ router.get('/', function (req, res) {
         title: "Electric Lettuce",
         username: username
     });
-})
+});
 
 module.exports = router;
