@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../auth');
 const sql = require('mssql');
 
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
     // Have to preserve async context since we make an async call
     // to the database in the validateLogin function.
     (async () => {
@@ -13,30 +13,36 @@ router.post('/', function(req, res) {
         } else {
             res.redirect("/login");
         }
-     })();
+    })();
 });
 
 async function validateLogin(req) {
     if (!req.body || !req.body.username || !req.body.password) {
         return false;
     }
-
     let username = req.body.username;
     let password = req.body.password;
-    let authenticatedUser =  await (async function() {
+    let query = "SELECT customerId FROM customer WHERE userid = @username AND password = @password"
+    let authenticatedUser = await (async function () {
         try {
             let pool = await sql.connect(dbConfig);
+            let result = await pool.request()
+                .input('username', sql.VarChar, username)
+                .input('password', sql.VarChar, password)
+                .query(query);
+            // TODO: Check if userId and password match some customer account.
+            // If so, set authenticatedUser to be the username.
+            if (result.recordset[0]) {
+                return true;
+            } else {
+                return false;
+            }
 
-	// TODO: Check if userId and password match some customer account. 
-	// If so, set authenticatedUser to be the username.
-
-           return false;
-        } catch(err) {
+        } catch (err) {
             console.dir(err);
             return false;
         }
     })();
-
     return authenticatedUser;
 }
 

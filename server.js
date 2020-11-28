@@ -12,6 +12,11 @@ let order = require('./routes/order');
 let customer = require('./routes/customer');
 let product = require('./routes/product');
 let displayImage = require('./routes/displayImage');
+let admin = require('./routes/admin');
+let login = require('./routes/login');
+let logout = require('./routes/logout');
+let index = require('./routes/index');
+let validateLogin = require('./routes/validateLogin');
 let ship = require('./routes/ship');
 
 const app = express();
@@ -49,6 +54,8 @@ app.set('view engine', 'handlebars');
 // Setting up Express.js routes.
 // These present a "route" on the URL of the site.
 // Eg: http://127.0.0.1/loaddata
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use('/loaddata', loadData);
 app.use('/listorder', listOrder);
 app.use('/listprod', listProd);
@@ -59,7 +66,12 @@ app.use('/order', order);
 app.use('/customer', customer);
 app.use('/product', product);
 app.use('/displayimage', displayImage);
+app.use('/admin', admin);
+app.use('/login', login);
+app.use('/logout', logout);
+app.use('/validateLogin', validateLogin);
 app.use('/ship', ship);
+app.use('/', index);
 app.use(express.static('public/'));
 
 // Rendering the main page
