@@ -12,6 +12,7 @@ let order = require('./routes/order');
 let customer = require('./routes/customer');
 let product = require('./routes/product');
 let displayImage = require('./routes/displayImage');
+let ship = require('./routes/ship');
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use('/order', order);
 app.use('/customer', customer);
 app.use('/product', product);
 app.use('/displayimage', displayImage);
+app.use('/ship', ship);
 app.use(express.static('public/'));
 
 // Rendering the main page
