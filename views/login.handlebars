@@ -1,33 +1,23 @@
-<div style="margin:0 auto;text-align:center;display:inline">
-
-    <h3>Please Login to System</h3>
-
-    {{#if loginMessage}}
-        <p>{{loginMessage}}</p>
-    {{/if}}
-
-    <br>
+{{#if loginMessage}}
+    <p>{{loginMessage}}</p>
+{{/if}}
+<div class="container-fluid">
+    <div class="row justify-content-center my-3">
+        <h3>Please Login to System</h3>
+    </div>
     <form method="POST" action="/validateLogin">
-        <table style="display:inline">
-            <tr>
-                <td>
-                    <div align="right">
-                        <font face="Arial, Helvetica, sans-serif" size="2">Username:</font>
-                    </div>
-                </td>
-                <td><input type="text" name="username" size=10 maxlength=10></td>
-            </tr>
-            <tr>
-                <td>
-                    <div align="right">
-                        <font face="Arial, Helvetica, sans-serif" size="2">Password:</font>
-                    </div>
-                </td>
-                <td><input type="password" name="password" size=10 maxlength="10"></td>
-            </tr>
-        </table>
-        <br />
-        <input class="submit" type="submit" name="Submit2" value="Log In">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input class="form-control" type="text" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input class="form-control" type="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <div class="form-group">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Submit</button>
+            </div>
+        </div>
     </form>
-
 </div>

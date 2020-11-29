@@ -7,20 +7,30 @@ router.get('/', function (req, res, next) {
     let productId = req.query.id;
 
     const query = "SELECT * FROM product WHERE productId = @id";
-    (async function() {
+    const query2 = "SELECT reviewRating, enteredName, reviewComment, CONVERT(varchar, reviewDate, 23) as date FROM review WHERE productId = @pid";
+    (async function () {
         try {
             let pool = await sql.connect(dbConfig);
 
             let result = await pool.request()
-            .input('id', sql.Int, productId)
-            .query(query);
+                .input('id', sql.Int, productId)
+                .query(query);
+
+            let reviews = await pool.request()
+                .input('pid', sql.Int, productId)
+                .query(query2);
 
             res.render('product', {
                 title: 'Product Details',
-                product: result.recordset[0]
+                product: result.recordset[0],
+                reviews: reviews.recordset
             });
-        } catch (e) {
-            console.dir(e);
+        } catch (err) {
+            console.dir(err);
+            res.render('message', {
+                type: 'danger',
+                message: err,
+            })
         }
 
     })();
