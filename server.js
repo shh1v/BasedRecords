@@ -18,6 +18,8 @@ let logout = require('./routes/logout');
 let index = require('./routes/index');
 let validateLogin = require('./routes/validateLogin');
 let ship = require('./routes/ship');
+let productReview = require('./routes/review');
+let processReview = require('./routes/processReview');
 
 const app = express();
 
@@ -71,6 +73,8 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/validateLogin', validateLogin);
 app.use('/ship', ship);
+app.use('/review', productReview);
+app.use('/processreview', processReview);
 app.use('/', index);
 app.use(express.static('public/'));
 
