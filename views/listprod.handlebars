@@ -11,6 +11,7 @@
         <td class="col">Product&nbspName</td>
         <td>Price</td>
         <td>Action</td>
+        <td>Review</td>
     </tr>
     </thead>
     <tbody>
@@ -23,6 +24,9 @@
                 <td>{{fixed this.productPrice 2}}$</td>
                 <td>
                     <a href="/addcart?id={{this.productId}}&name={{this.productName}}&price={{this.productPrice}}" class="btn btn-outline-primary">Add to Shopping Cart</a>
+                </td>
+                <td>
+                    <a href="/review?id={{this.productId}}" class="btn btn-outline-primary">Add a Review</a>
                 </td>
             </tr>
         {{/each}}

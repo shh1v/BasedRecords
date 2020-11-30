@@ -131,7 +131,9 @@ CREATE TABLE review (
     reviewDate          DATETIME,   
     customerId          INT,
     productId           INT,
-    reviewComment       VARCHAR(1000),          
+    reviewComment       VARCHAR(1000),
+    enteredName         VARCHAR(100),
+    enteredEmail        VARCHAR(100)
     PRIMARY KEY (reviewId),
     FOREIGN KEY (customerId) REFERENCES customer(customerId)
         ON UPDATE CASCADE ON DELETE CASCADE,
