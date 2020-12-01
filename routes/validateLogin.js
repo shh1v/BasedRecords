@@ -9,7 +9,7 @@ router.post('/', function (req, res) {
     (async () => {
         let authenticatedUser = await validateLogin(req);
         if (authenticatedUser) {
-            res.redirect(req.session.url);
+            res.redirect(req.session.url ? req.session.url : '/');
         } else {
             res.redirect("/login");
         }
