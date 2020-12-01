@@ -12,10 +12,7 @@ router.get('/', function (req, res, next) {
     }
 
     if(!productList){
-        res.render('checkout', {
-            title: 'Grocery CheckOut Line',
-            invalid: 'No Product in the Shopping Cart!'
-        });
+        res.redirect('/checkout?invalid=Your shopping list is empty');
         return;
     }
 
@@ -32,11 +29,8 @@ router.get('/', function (req, res, next) {
     }
 
     customer.validateUserPass(customerId, customerPass).then(function (customerId) {
-        if (customerId === -1) {
-            res.render('checkout', {
-                title: 'Grocery CheckOut Line',
-                invalid: 'Invalid User ID or Password!'
-            });
+        if (customerId === -1 || customerId !== req.session.authenticatedUserId) {
+            res.redirect('/checkout?invalid=Invalid User ID or Password!');
             return;
         }
 
