@@ -34,6 +34,7 @@ async function validateLogin(req) {
             // If so, set authenticatedUser to be the username.
             if (result.recordset[0]) {
                 req.session.authenticatedUser = username;
+                req.session.authenticatedUserId = result.recordset[0].customerId;
                 return true;
             } else {
                 return false;
