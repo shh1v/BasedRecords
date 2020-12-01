@@ -9,7 +9,7 @@ router.post('/', function (req, res) {
     (async () => {
         let authenticatedUser = await validateLogin(req);
         if (authenticatedUser) {
-            res.redirect("/");
+            res.redirect(req.session.url ? req.session.url : '/');
         } else {
             res.redirect("/login");
         }
@@ -34,6 +34,7 @@ async function validateLogin(req) {
             // If so, set authenticatedUser to be the username.
             if (result.recordset[0]) {
                 req.session.authenticatedUser = username;
+                req.session.authenticatedUserId = result.recordset[0].customerId;
                 return true;
             } else {
                 return false;

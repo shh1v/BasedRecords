@@ -20,6 +20,7 @@ let validateLogin = require('./routes/validateLogin');
 let ship = require('./routes/ship');
 let productReview = require('./routes/review');
 let processReview = require('./routes/processReview');
+let addPaymentMethod = require('./routes/addPaymentMethod');
 
 const app = express();
 
@@ -75,6 +76,7 @@ app.use('/validateLogin', validateLogin);
 app.use('/ship', ship);
 app.use('/review', productReview);
 app.use('/processreview', processReview);
+app.use('/addPaymentMethod', addPaymentMethod);
 app.use('/', index);
 app.use(express.static('public/'));
 

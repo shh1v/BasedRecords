@@ -11,6 +11,7 @@ const auth = {
         if (!authenticated) {
             let url = req.protocol + '://' + req.get('host') + req.originalUrl;
             req.session.loginMessage = "You have not been authorized to access the URL " + url;
+            req.session.url = url;
             res.redirect("/login");
         }
     

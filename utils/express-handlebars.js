@@ -7,6 +7,10 @@ const hbs = exphbs.create({
         },
         fixed: function (num, digits) {
             return num.toFixed(digits);
+        },
+        paymentMethodFormat: function (paymentMethod) {
+            const date = paymentMethod.paymentExpiryDate;
+            return `[${paymentMethod.paymentType}] ${paymentMethod.paymentNumber} (${date.getMonth()+1}/${date.getFullYear()})`;
         }
     }
 });
