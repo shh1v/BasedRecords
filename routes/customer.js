@@ -54,11 +54,11 @@ router.post('/', function (req, res, next) {
         try {
             let pool = await sql.connect(dbConfig);
 
-            let result = pool.request()
+            let result = await pool.request()
                 .input('firstName', sql.VarChar, firstName)
                 .input('lastName', sql.VarChar, lastName)
                 .input('email', sql.VarChar, email)
-                .input('phonenume', sql.VarChar, phonenum)
+                .input('phonenum', sql.VarChar, phonenum)
                 .input('address', sql.VarChar, address)
                 .input('city', sql.VarChar, city)
                 .input('state', sql.VarChar, state)
@@ -68,7 +68,6 @@ router.post('/', function (req, res, next) {
                 .input('password', sql.VarChar, password)
                 .input('customerId', sql.Int, customerId)
                 .query(query);
-            console.log(result.recordset);
             res.redirect('/customer')
         } catch (err) {
             console.dir(err);
