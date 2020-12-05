@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
             .input('name', sql.VarChar, name)
             .query(query);
 
-        res.render('listprod', {
+        res.render('product/list', {
             title: "Products",
             products: result.recordset
         });
