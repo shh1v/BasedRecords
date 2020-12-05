@@ -49,6 +49,7 @@ CREATE TABLE ordersummary (
     shiptoState         VARCHAR(20),
     shiptoPostalCode    VARCHAR(20),
     shiptoCountry       VARCHAR(40),
+    shipped             BIT DEFAULT 'false',
     customerId          INT,
     PRIMARY KEY (orderId),
     FOREIGN KEY (customerId) REFERENCES customer(customerid)
