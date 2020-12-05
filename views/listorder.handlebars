@@ -6,6 +6,7 @@
         <th>Customer Id</th>
         <th>Customer Name</th>
         <th>Total Amount</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -16,6 +17,9 @@
             <td> {{customerId}}</td>
             <td> {{firstName}}&nbsp{{lastName}} </td>
             <td> ${{fixed totalAmount 2}} </td>
+            <td>
+                <a class="btn btn-primary" href="/ship?orderId={{orderId}}">Ship</a>
+            </td>
         </tr>
         <tr>
             <th></th>
