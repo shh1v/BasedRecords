@@ -25,3 +25,35 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
+    <div class="container">
+        <canvas id="myChart"></canvas>
+    </div>
+        <script>
+            var index;
+            var date = [];
+            var num = [];
+            const loadObject = () => fetch('/').then(response => res.json).then(obj => {
+                for(index = 0; index < obj.sales.length; index++){
+                    date.push(obj.sales.dateOrdered[index]);
+                    num.push(obj.sales.totalAmountEarned[index]);
+                }
+            })
+            window.onload(loadObject);
+            let myChart=document.getElementById('myChart').getContext('2d');
+            let lineChart = new Chart(myChart, {
+                type:'line',
+                data:{
+                    labels: date,  //x-axis values
+                    datasets:[{
+                        label:'Total Sales Report',
+                        data: num //y-axis values
+                        }]
+                },
+                options:{}
+            });
+        </script>
+</body>
+
