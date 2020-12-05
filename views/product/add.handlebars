@@ -1,0 +1,36 @@
+<form method="post">
+    <div class="form-group">
+        <label for="warehouse">Warehouse</label>
+        <select class="form-control" type="text" name="warehouse" id="warehouse">
+            {{#each warehouses}}
+                <option value="{{warehouseId}}">{{warehouseName}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <select class="form-control" type="text" name="category" id="category">
+            {{#each categories}}
+                <option value="{{categoryId}}">{{categoryName}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input class="form-control" type="text" name="name" id="name">
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input class="form-control" type="number" name="price" id="price" step=".01">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" name="description" id="description"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input class="form-control" type="number" name="quantity" id="quantity">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit">
+    <input class="btn btn-primary" type="reset" value="Reset">
+</form>

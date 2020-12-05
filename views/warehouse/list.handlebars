@@ -1,0 +1,21 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each warehouses}}
+        <tr>
+            <td>{{addOne @index}}</td>
+            <td>{{warehouseName}}</td>
+            <td>
+                <a class="btn btn-primary" href="/warehouse/{{warehouseId}}">View Inventory</a>
+                <a class="btn btn-primary" href="/product/add">Add Product</a>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

@@ -1,0 +1,27 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each products}}
+        <tr>
+            <td>{{addOne @index}}</td>
+            <td><img src="/{{productImageURL}}" alt="image" height="100"/></td>
+            <td>{{productName}}</td>
+            <td>{{quantity}}</td>
+            <td>{{price}}</td>
+            <td>
+                <a class="btn btn-primary" href="/product?id={{productId}}">View Details</a>
+                <a class="btn btn-warning" href="/product/{{productId}}/edit">Edit Product</a>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
