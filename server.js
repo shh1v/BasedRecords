@@ -22,6 +22,7 @@ let productReview = require('./routes/review');
 let processReview = require('./routes/processReview');
 let addPaymentMethod = require('./routes/addPaymentMethod');
 let register = require('./routes/register');
+let warehouse = require('./routes/warehouse/warehouse');
 
 const app = express();
 
@@ -78,7 +79,8 @@ app.use('/ship', ship);
 app.use('/review', productReview);
 app.use('/processreview', processReview);
 app.use('/addPaymentMethod', addPaymentMethod);
-app.use('/register', register)
+app.use('/register', register);
+app.use('/warehouse', warehouse);
 app.use('/', index);
 app.use(express.static('public/'));
 
