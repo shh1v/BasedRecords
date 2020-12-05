@@ -23,6 +23,7 @@ let processReview = require('./routes/processReview');
 let addPaymentMethod = require('./routes/addPaymentMethod');
 let register = require('./routes/register');
 let warehouse = require('./routes/warehouse/warehouse');
+let orderHistory = require('./routes/orderhistory');
 
 const app = express();
 
@@ -81,6 +82,7 @@ app.use('/processreview', processReview);
 app.use('/addPaymentMethod', addPaymentMethod);
 app.use('/register', register);
 app.use('/warehouse', warehouse);
+app.use('/orderhistory', orderHistory);
 app.use('/', index);
 app.use(express.static('public/'));
 
