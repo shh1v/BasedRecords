@@ -128,3 +128,58 @@ nav ul li {
   background-color: #4abeff;
   color: rgb(30, 30, 30);
 }
+
+/* 
+--- ACOUNT (Login) ---
+*/
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: #404040;
+  border-color: white;
+  border-radius: 15px;
+}
+.login-container h1 {
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid rgb(32, 32, 32);
+}
+.login-container form {
+  padding: 30px;
+  box-sizing: border-box;
+}
+.login-container input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  height: 40px;
+  font-size: 18px;
+  border-style: solid;
+  background: rgb(32, 32, 32);
+  color: white;
+  outline: none;
+}
+.login-container button {
+  width: 100%;
+  height: 50px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  background-color: #4abeff;
+  outline: none;
+  cursor: pointer;
+}
+.signup-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+}
+.signup-link a {
+  color: #4abeff;
+}
