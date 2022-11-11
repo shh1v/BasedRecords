@@ -1,0 +1,130 @@
+/* 
+--- GENERAL ---
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Lato", sans-serif;
+  background-color: rgb(32, 32, 32);
+}
+a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+a:hover {
+  color: #4abeff;
+}
+p {
+  color: rgb(255, 255, 255);
+}
+
+/* 
+--- HEADER/NAV ---
+*/
+.header {
+  background: linear-gradient(#5b9ed8, rgb(32, 32, 32));
+  margin: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 30px;
+}
+nav {
+  flex: 1;
+  text-align: right;
+}
+nav ul {
+  display: inline-block;
+  list-style-type: none;
+}
+nav ul li {
+  display: inline-block;
+  margin-right: 35px;
+  font-size: 1.3rem;
+}
+
+/* 
+--- SEARCH ---
+*/
+.search {
+  padding: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-bar {
+  width: 50%;
+  max-width: 700px;
+  background-color: #404040;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  padding: 10px 20px;
+  backdrop-filter: blur(4px) saturate(180%);
+}
+.search-bar input {
+  width: 400px;
+  height: 5px;
+  background: transparent;
+  flex: 1;
+  border: 0;
+  outline: none;
+  padding: 10px;
+  font-size: 20px;
+  color: rgb(234, 234, 234);
+}
+.search-bar button img {
+  width: 25px;
+}
+.search-bar button {
+  border: 0;
+  border-radius: 20px;
+  width: 50px;
+  height: 50px;
+  background: #282828;
+  cursor: pointer;
+}
+
+/* 
+--- PRODUCTS ---
+*/
+.products {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#records {
+  margin-bottom: 100px;
+  border-collapse: collapse;
+  width: 70%;
+  color: white;
+}
+
+#records td,
+#records th {
+  border: 1px solid #ddd;
+  padding: 20px;
+  font-size: 18px;
+}
+
+#records tr:nth-child(even) {
+  background-color: #404040;
+}
+
+#records tr:hover {
+  background-color: rgb(13, 51, 87);
+}
+
+#records th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4abeff;
+  color: rgb(30, 30, 30);
+}
