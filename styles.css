@@ -92,41 +92,66 @@ nav ul li {
 }
 
 /* 
---- PRODUCTS ---
+--- PRODUCTS & ORDER SUMMARY ---
 */
-.products {
+.products,
+.customer-info,
+.order-info {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#records {
+.summary {
+  margin-top: 60px;
+}
+#records,
+#customer-info,
+#order-info {
   margin-bottom: 100px;
   border-collapse: collapse;
   width: 70%;
   color: white;
 }
+#customer-info,
+#order-info {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
 
 #records td,
-#records th {
+#records th,
+#customer-info td,
+#customer-info th,
+#order-info td,
+#order-info th {
   border: 1px solid #ddd;
   padding: 20px;
   font-size: 18px;
 }
 
-#records tr:nth-child(even) {
+#records tr:nth-child(even),
+#customer-info tr:nth-child(even),
+#order-info tr:nth-child(even) {
   background-color: #404040;
 }
 
-#records tr:hover {
+#records tr:hover,
+#customer-info tr:hover,
+#order-info tr:hover {
   background-color: rgb(13, 51, 87);
 }
 
-#records th {
+#records th,
+#customer-info th,
+#order-info th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
   background-color: #4abeff;
   color: rgb(30, 30, 30);
+}
+#customer-info th {
+  background-color: #f6cf00;
 }
 
 /* 
