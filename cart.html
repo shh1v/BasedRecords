@@ -29,7 +29,7 @@
         <nav>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="#records">Shop</a></li>
+            <li><a href="index.html">Shop</a></li>
             <li><a href="orders.html">Orders</a></li>
             <li><a href="account.html">Account</a></li>
           </ul>
@@ -40,90 +40,48 @@
       </div>
     </div>
 
-    <!---------------->
-    <!-- SEARCH BAR -->
-    <!---------------->
-    <div class="search">
-      <form action="" class="search-bar">
-        <input type="text" placeholder="Search our records" name="q" />
-        <button type="submit"><img src="Assets/search-icon.png" /></button>
-      </form>
-    </div>
-
     <!--------------------->
-    <!-- PRODUCTS (Shop) -->
+    <!-- SHOPPING CART ---->
     <!--------------------->
-    <div class="products">
-      <table id="records">
-        <!-- Header values -->
+    <div class="cart">
+      <table id="cart">
         <tr>
-          <th>Record Name</th>
-          <th>Artist</th>
-          <th>Genre</th>
+          <th>Product ID</th>
+          <th>Product Name</th>
           <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Remove From Cart</th>
         </tr>
-        <!-- Begin records -->
         <tr>
+          <td>1</td>
           <td>Currents</td>
-          <td>Tame Impala</td>
-          <td>Indie/Alternative</td>
           <td>$34.99</td>
-        </tr>
-        <tr>
-          <td>Lonerism</td>
-          <td>Tame Impala</td>
-          <td>Indie/Alternative</td>
-          <td>$29.99</td>
-        </tr>
-        <tr>
-          <td>good kid, m.A.A.d city</td>
-          <td>Kendrick Lamar</td>
-          <td>Rap</td>
-          <td>$39.99</td>
-        </tr>
-        <tr>
-          <td>Meliora</td>
-          <td>Ghost</td>
-          <td>Heavy Metal</td>
-          <td>$49.99</td>
-        </tr>
-        <tr>
-          <td>Salad Days</td>
-          <td>Mac DeMarco</td>
-          <td>Indie/Alternative</td>
-          <td>$44.99</td>
-        </tr>
-        <tr>
-          <td>Punisher</td>
-          <td>Phoebe Bridgers</td>
-          <td>Indie/Alternative</td>
-          <td>$44.99</td>
-        </tr>
-        <tr>
-          <td>Abbey Road</td>
-          <td>The Beatles</td>
-          <td>Pop Rock</td>
-          <td>$39.99</td>
-        </tr>
-        <tr>
-          <td>Untrue</td>
-          <td>Burial</td>
-          <td>UK Garage</td>
-          <td>$29.99</td>
-        </tr>
-        <tr>
-          <td>Plastic Beach</td>
-          <td>Gorillaz</td>
-          <td>Hip Hop</td>
-          <td>$39.99</td>
-        </tr>
-        <tr>
-          <td>Demon Days</td>
-          <td>Gorillaz</td>
-          <td>Hip Hop</td>
+          <td>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="0"
+              max="100"
+            />
+            <button type="update">Update Quantity</button>
+          </td>
           <td>$34.99</td>
+          <td>
+            <a href="cart.html">
+              <img src="Assets/trash-can.png" width="40px" height="40px" />
+            </a>
+          </td>
         </tr>
       </table>
+      <h2>Order Total: <br />$34.99</h2>
+    </div>
+
+    <div class="end-cart-options">
+      <a href="account.html"><h1>Checkout</h1></a>
+      <h2>//</h2>
+      <a href="index.html"><h1>Continue Shopping</h1></a>
     </div>
   </body>
 </html>

@@ -12,13 +12,13 @@ body {
 }
 a {
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: white;
 }
 a:hover {
   color: #4abeff;
 }
 p {
-  color: rgb(255, 255, 255);
+  color: white;
 }
 
 /* 
@@ -121,11 +121,12 @@ select {
 }
 
 /* 
---- PRODUCTS & ORDER SUMMARY ---
+--- PRODUCTS & ORDER SUMMARY & CART PAGE ---
 */
 .products,
 .customer-info,
-.order-info {
+.order-info,
+.cart {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,14 +136,16 @@ select {
 }
 #records,
 #customer-info,
-#order-info {
+#order-info,
+#cart {
   margin-bottom: 100px;
   border-collapse: collapse;
   width: 70%;
   color: white;
 }
 #customer-info,
-#order-info {
+#order-info,
+#cart {
   margin-bottom: 0px;
   margin-top: 0px;
 }
@@ -152,7 +155,9 @@ select {
 #customer-info td,
 #customer-info th,
 #order-info td,
-#order-info th {
+#order-info th,
+#cart td,
+#cart th {
   border: 1px solid #ddd;
   padding: 20px;
   font-size: 18px;
@@ -160,19 +165,22 @@ select {
 
 #records tr:nth-child(even),
 #customer-info tr:nth-child(even),
-#order-info tr:nth-child(even) {
+#order-info tr:nth-child(even),
+#cart tr:nth-child(even) {
   background-color: #404040;
 }
 
 #records tr:hover,
 #customer-info tr:hover,
-#order-info tr:hover {
+#order-info tr:hover,
+#cart tr:hover {
   background-color: rgb(13, 51, 87);
 }
 
 #records th,
 #customer-info th,
-#order-info th {
+#order-info th,
+#cart th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
@@ -181,6 +189,46 @@ select {
 }
 #customer-info th {
   background-color: #f6cf00;
+}
+/*
+--- CART SPECIFIC SHIT ---
+*/
+.cart {
+  margin-top: 60px;
+}
+.cart input {
+  width: 100%;
+  padding: 15px;
+  height: 40px;
+  font-size: 18px;
+  border-style: solid;
+  background: rgb(32, 32, 32);
+  color: white;
+  outline: none;
+}
+.cart button {
+  padding: 10px;
+  background: #4abeff;
+  margin-top: 10px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+}
+.cart h2 {
+  color: white;
+  margin-left: 20px;
+}
+.end-cart-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+.end-cart-options h1 {
+  padding: 25px;
+}
+.end-cart-options h2 {
+  color: white;
 }
 
 /* 
