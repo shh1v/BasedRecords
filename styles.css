@@ -92,6 +92,35 @@ nav ul li {
 }
 
 /* 
+--- FILTER ---
+*/
+.filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0;
+  text-align: center;
+  border-radius: 20px;
+  background-color: #404040;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding: 20px;
+  font-size: 18px;
+  color: white;
+}
+
+/* 
 --- PRODUCTS & ORDER SUMMARY ---
 */
 .products,
