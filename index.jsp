@@ -1,3 +1,6 @@
+<%@ page import="java.sql.*,java.net.URLEncoder" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -44,7 +47,7 @@
     <!-- SEARCH BAR -->
     <!---------------->
     <div class="search">
-      <form action="" class="search-bar">
+      <form method="get" action="localhost/index.jsp" class="search-bar">
         <input type="text" placeholder="Search our records" name="q" />
         <button type="submit"><img src="Assets/search-icon.png" /></button>
       </form>
@@ -73,102 +76,57 @@
     <!-- PRODUCTS (Shop) -->
     <!--------------------->
     <!-- Listing all the products from the database-->
-    
-    <div class="products">
-      <table id="records">
-        <!-- Header values -->
-        <tr>
-          <th>Record Name</th>
-          <th>Artist</th>
-          <th>Genre</th>
-          <th>Price</th>
-        </tr>
-        <!-- Begin records -->
-        <tr>
-          <td>Currents</td>
-          <td>Tame Impala</td>
-          <td>Indie/Alternative</td>
-          <td>$34.99</td>
-        </tr>
-        <tr>
-          <td>Lonerism</td>
-          <td>Tame Impala</td>
-          <td>Indie/Alternative</td>
-          <td>$29.99</td>
-        </tr>
-        <tr>
-          <td>good kid, m.A.A.d city</td>
-          <td>Kendrick Lamar</td>
-          <td>Rap</td>
-          <td>$39.99</td>
-        </tr>
-        <tr>
-          <td>Meliora</td>
-          <td>Ghost</td>
-          <td>Heavy Metal</td>
-          <td>$49.99</td>
-        </tr>
-        <tr>
-          <td>Salad Days</td>
-          <td>Mac DeMarco</td>
-          <td>Indie/Alternative</td>
-          <td>$44.99</td>
-        </tr>
-        <tr>
-          <td>Punisher</td>
-          <td>Phoebe Bridgers</td>
-          <td>Indie/Alternative</td>
-          <td>$44.99</td>
-        </tr>
-        <tr>
-          <td>Abbey Road</td>
-          <td>The Beatles</td>
-          <td>Pop Rock</td>
-          <td>$39.99</td>
-        </tr>
-        <tr>
-          <td>Untrue</td>
-          <td>Burial</td>
-          <td>UK Garage</td>
-          <td>$29.99</td>
-        </tr>
-        <tr>
-          <td>Plastic Beach</td>
-          <td>Gorillaz</td>
-          <td>Hip Hop</td>
-          <td>$39.99</td>
-        </tr>
-        <tr>
-          <td>Demon Days</td>
-          <td>Gorillaz</td>
-          <td>Hip Hop</td>
-          <td>$34.99</td>
-        </tr>
-        <tr>
-          <td>Thriller</td>
-          <td>Michael Jackson</td>
-          <td>Pop</td>
-          <td>$34.99</td>
-        </tr>
-        <tr>
-          <td>The Dark Side of the Moon</td>
-          <td>Pink Floyd</td>
-          <td>Rock</td>
-          <td>$29.99</td>
-        </tr>
-        <tr>
-          <td>Apollo XXI</td>
-          <td>Steve Lacy</td>
-          <td>R&B/Soul</td>
-          <td>$24.99</td>
-        </tr>
-        <tr>
-          <td>Legend</td>
-          <td>Bob Marley</td>
-          <td>Reggae</td>
-          <td>$39.99</td>
-        </tr>
-      </table>
-    </div>
+    <%
+    String name = request.getParameter("productName");
+    name = name == null ? "" : name; 
+
+    try
+    {	// Load driver class
+      Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    }
+    catch (java.lang.ClassNotFoundException e)
+    {
+      out.println("ClassNotFoundException: " +e);
+    }
+    // User id, password, and server information
+    String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
+    String uid = "sa";
+    String pw = "304#sa#pw";
+
+    try (Connection con = DriverManager.getConnection(url, uid, pw)) {
+      String SQL = "SELECT productName, categoryName, productPrice FROM product JOIN category ON product.categoryId = category.categoryId";
+      if (!name.equals("")) {
+        SQL += " WHERE genreName LIKE ?";
+      }
+      PreparedStatement pstmt = con.prepareStatement(SQL);
+      if (!name.equals("")) {
+        pstmt.setString(1, name);
+      }
+      ResultSet rslt = pstmt.executeQuery();
+      boolean hasRows = false;
+      while (rslt.next()) {
+        if (!hasRows) {
+          hasRows = true;
+          out.println("<div class=\"products\"><table id=\"records\"><tr><th>Record Name</th><th>Artist</th><th>Genre</th><th>Price</th></tr>");
+        }
+        out.println(String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", rslt.getString(1), rslt.getString(2), rslt.getString(3)));
+      }
+      out.println("</table></div>");
+    }
+    // Variable name now contains the search string the user entered
+    // Use it to build a query and print out the resultset.  Make sure to use PreparedStatement!
+
+    // Make the connection
+
+    // Print out the ResultSet
+
+    // For each product create a link of the form
+    // addcart.jsp?id=productId&name=productName&price=productPrice
+    // Close connection
+
+    // Useful code for formatting currency values:
+    // NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+    // out.println(currFormat.format(5.0);	// Prints $5.00
+    %>
   </body>
 </html>
