@@ -47,8 +47,8 @@
     <!-- SEARCH BAR -->
     <!---------------->
     <div class="search">
-      <form method="get" action="localhost/index.jsp" class="search-bar">
-        <input type="text" placeholder="Search our records" name="q" />
+      <form method="get" action="http://localhost/shop/index.jsp" class="search-bar">
+        <input type="text" placeholder="Search our records" name="productName" />
         <button type="submit"><img src="Assets/search-icon.png" /></button>
       </form>
     </div>
@@ -94,39 +94,26 @@
     String pw = "304#sa#pw";
 
     try (Connection con = DriverManager.getConnection(url, uid, pw)) {
-      String SQL = "SELECT productName, categoryName, productPrice FROM product JOIN category ON product.categoryId = category.categoryId";
+      /* productId, productName, ArtistName, Genre, Price */
+      String SQL = "SELECT albumId, albumName, albumArtist, genreName, albumPrice FROM album JOIN genre ON album.genreId = genre.genreId";
       if (!name.equals("")) {
-        SQL += " WHERE genreName LIKE ?";
+        SQL += " WHERE albumName LIKE ?";
       }
       PreparedStatement pstmt = con.prepareStatement(SQL);
       if (!name.equals("")) {
-        pstmt.setString(1, name);
+        pstmt.setString(1, "%" + name + "%");
       }
       ResultSet rslt = pstmt.executeQuery();
       boolean hasRows = false;
       while (rslt.next()) {
         if (!hasRows) {
           hasRows = true;
-          out.println("<div class=\"products\"><table id=\"records\"><tr><th>Record Name</th><th>Artist</th><th>Genre</th><th>Price</th></tr>");
+          out.println("<div class=\"products\"><table id=\"records\"><tr><th>Record Name</th><th>Artist</th><th>Genre</th><th>Price</th><th>Add to cart</th></tr>");
         }
-        out.println(String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", rslt.getString(1), rslt.getString(2), rslt.getString(3)));
+        out.println(String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"addcart.jsp?id=%s&name=%s&price=%s\">Add to Cart</a></td></tr>", rslt.getString(2), rslt.getString(3), rslt.getString(4), NumberFormat.getCurrencyInstance().format(rslt.getDouble(5)) , rslt.getString(1), rslt.getString(2), rslt.getString(5)));
       }
       out.println("</table></div>");
     }
-    // Variable name now contains the search string the user entered
-    // Use it to build a query and print out the resultset.  Make sure to use PreparedStatement!
-
-    // Make the connection
-
-    // Print out the ResultSet
-
-    // For each product create a link of the form
-    // addcart.jsp?id=productId&name=productName&price=productPrice
-    // Close connection
-
-    // Useful code for formatting currency values:
-    // NumberFormat currFormat = NumberFormat.getCurrencyInstance();
-    // out.println(currFormat.format(5.0);	// Prints $5.00
     %>
   </body>
 </html>
