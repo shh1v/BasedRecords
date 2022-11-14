@@ -102,12 +102,14 @@
         }		
 
         out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
-        out.print("<td align=\"right\"><input type=\"number\" id=\"quantity\" name=\"quantity\" value=\"" + qty + "\"/><button type=\"update\">Update Quantity</button></td>");
+        out.print("<td align=\"right\"><form method=\"post\" action=\"updateItem.jsp?id=" + product.get(0) + "\"><input type=\"number\" id=\"quantity\" name=\"quantity\" value=\"" + qty + "\"/><button type=\"submit\" value=\"Submit\">Update Quantity</button></td>");
 
-        out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");
+        out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td>");
+        out.print("<td align=\"center\"><a href=\"removeItem.jsp?id=" + product.get(0) + "\"><img src=\"Assets/trash-can.png\" width=\"40px\" height=\"40px\"/></a></td></tr>");
+
         out.println("</tr>");
         total = total +pr*qty;
-        // 
+        
       }
       out.println("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td>"
           +"<td align=\"right\">"+currFormat.format(total)+"</td></tr>");
