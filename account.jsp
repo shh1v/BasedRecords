@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ page import="java.sql.*" %>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -45,13 +45,15 @@
     <!--------------------->
     <div class="login-container">
       <h1>Sign In Here</h1>
-      <form action="" class="login-form">
-        <input type="text" placeholder="Username" required />
-        <input type="password" placeholder="Password" required />
+      <form method="get" action="accountverification.jsp" class="login-form">
+        <%
+          String invalid = request.getParameter("invalid");
+          if (invalid != null && invalid.equals("true"))
+            out.println("<h3 style=\"color:red; margin-bottom:5px;\">Invalid login information</h3>");
+        %>
+        <input type="text" name="userid" placeholder="Username" required />
+        <input type="password" name="pass" placeholder="Password" required />
         <button type="submit" class="login-button">Login</button>
-        <div class="signup-link">
-          Don't have an account? <a href="#">Sign up</a>!
-        </div>
       </form>
     </div>
   </body>

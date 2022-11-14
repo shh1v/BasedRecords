@@ -56,30 +56,10 @@
     <!------------>
     <!-- FILTER -->
     <!------------>
-
     <div class="filter">
       <h1>Filter by genre:</h1>
       <select name="genre" id="genre">
-        <option value="indie-alternative">Indie/Alternative</option>
-        <option value="heavy-metal">Heavy Metal</option>
-        <option value="rap">Rap</option>
-        <option value="pop-rock">Pop Rock</option>
-        <option value="uk-garage">UK Garage</option>
-        <option value="hip-hop">Hip Hop</option>
-        <option value="pop">Pop</option>
-        <option value="rock">Rock</option>
-        <option value="rnb-soul">R&B/Soul</option>
-        <option value="reggae">Reggae</option>
-      </select>
-    </div>
-    <!--------------------->
-    <!-- PRODUCTS (Shop) -->
-    <!--------------------->
-    <!-- Listing all the products from the database-->
     <%
-    String name = request.getParameter("productName");
-    name = name == null ? "" : name; 
-
     try
     {	// Load driver class
       Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -92,6 +72,26 @@
     String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
     String uid = "sa";
     String pw = "304#sa#pw";
+
+    try (Connection con = DriverManager.getConnection(url, uid, pw)) {
+      String SQL = "SELECT genreName FROM genre";
+      PreparedStatement pstmt = con.prepareStatement(SQL);
+      ResultSet rslt = pstmt.executeQuery();
+      while (rslt.next()) {
+          out.println("<option value=\"" + rslt.getString(1) + "\">" + rslt.getString(1) + "</option>");
+      }
+      out.println("</table></div>");
+    }
+    %>
+      </select>
+    </div>
+    <!--------------------->
+    <!-- PRODUCTS (Shop) -->
+    <!--------------------->
+    <!-- Listing all the products from the database-->
+    <%
+    String name = request.getParameter("productName");
+    name = name == null ? "" : name; 
 
     try (Connection con = DriverManager.getConnection(url, uid, pw)) {
       /* productId, productName, ArtistName, Genre, Price */

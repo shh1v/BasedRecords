@@ -9,9 +9,8 @@ String id = request.getParameter("id");
 String newqty = request.getParameter("quantity");
 
 // Updating the quantity of the product in the list
-Object product = (ArrayList<Object>) productList.get(id);
-product.set(3, Integer.parseInt(newqty));
-
+ArrayList<Object> product = (ArrayList<Object>) productList.get(id);
+product.set(3, new Integer(newqty));
 session.setAttribute("productList", productList);
 %>
 <jsp:forward page="cart.jsp" />
