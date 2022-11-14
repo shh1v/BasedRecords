@@ -1,0 +1,98 @@
+/* 
+--- GENERAL ---
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Lato", sans-serif;
+  background-color: rgb(32, 32, 32);
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+a:hover {
+  color: #4abeff;
+}
+p {
+  color: white;
+}
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin: 30px;
+}
+
+/* 
+--- HEADER/NAV ---
+*/
+.header {
+  background: linear-gradient(#5b9ed8, rgb(32, 32, 32));
+  margin: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+/*
+--- ORDER LIST ---
+*/
+
+.order-list,
+.product-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.order-list,
+.product-list {
+  margin-top: 0;
+}
+#order-list,
+#product-list {
+  border-collapse: collapse;
+  width: 70%;
+  color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(32, 32, 32);
+}
+
+#order-list td,
+#order-list th,
+#product-list td,
+#product-list th {
+  border: 1px solid #ddd;
+  padding: 20px;
+  font-size: 18px;
+}
+
+#order-list tr:nth-child(even),
+#product-list tr:nth-child(even) {
+  background-color: #404040;
+}
+
+#order-list tr:hover,
+#product-list tr:hover {
+  background-color: rgb(13, 51, 87);
+}
+
+#order-list th {
+  background-color: #4abeff;
+  color: #404040;
+}
+#product-list th {
+  background-color: #f6cf00;
+  color: #404040;
+}
