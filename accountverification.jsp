@@ -1,6 +1,5 @@
 <%@ page import="java.sql.*" %>
 <%
-    System.out.println(request.getParameterMap().keySet());
     String logout = request.getParameter("logout");
     if (logout != null) {
         session.setAttribute("customerId", null);

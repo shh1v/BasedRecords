@@ -88,20 +88,21 @@
         if (order == null || order.size() == 0) {
             displayOrder = false;
         } else {
-            // Calculate total 
-            for (String album : order.keySet()) {
-                ArrayList<Object> product = order.get(album);
-                totalAmount += Double.parseDouble((String) product.get(2)) * ((Integer)product.get(3)).intValue();
-            }
+            try (Connection con = DriverManager.getConnection(url, uid, pw);) {
+                // Calculate total 
+                for (String album : order.keySet()) {
+                    ArrayList<Object> product = order.get(album);
+                    totalAmount += Double.parseDouble((String) product.get(2)) * ((Integer)product.get(3)).intValue();
+                }
 
-            // Get DateTime
-            LocalDateTime myDateObj = LocalDateTime.now();
-            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String orderDate = myDateObj.format(myFormatObj);
+                // Get DateTime
+                LocalDateTime myDateObj = LocalDateTime.now();
+                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String orderDate = myDateObj.format(myFormatObj);
 
-            // Address info
-            String address="", city="", state="", postalCode="", country="";
-            try (Connection con = DriverManager.getConnection(url, uid, pw)) {
+                // Address info
+                String address="", city="", state="", postalCode="", country="";
+            
                 PreparedStatement stmt = con.prepareStatement("SELECT firstName, lastName, address, city, state, postalCode, country FROM customer WHERE customerId = ?");
                 stmt.setString(1, customerId);
                 ResultSet result = stmt.executeQuery();
@@ -132,6 +133,17 @@
                 if (generatedKeys.next()) {
                     orderId = String.valueOf(generatedKeys.getInt(1));
                 }
+
+                // Add each ordered product to the orderalbum table
+                stmt = con.prepareStatement("INSERT INTO orderalbum VALUES (?, ?, ?, ?)");
+                for (String album : order.keySet()) {
+                    stmt.setString(1, orderId);
+                    stmt.setString(2, (String) order.get(album).get(0)); // AlbumId
+                    stmt.setString(3, String.valueOf(order.get(album).get(3))); // Quantity
+                    stmt.setString(4, (String) order.get(album).get(2)); // Price
+                    stmt.executeUpdate();
+                }
+
             }
         }
 

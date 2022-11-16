@@ -70,6 +70,7 @@ CREATE TABLE orderalbum (
     orderId             INT,
     albumId           INT,
     quantity            INT, 
+    price               DECIMAL(10,2), 
     PRIMARY KEY (orderId, albumId),
     FOREIGN KEY (orderId) REFERENCES ordersummary(orderId)
         ON UPDATE CASCADE ON DELETE NO ACTION,
@@ -81,6 +82,7 @@ CREATE TABLE incart (
     orderId             INT,
     albumId           INT,
     quantity            INT, 
+    price               DECIMAL(10,2), 
     PRIMARY KEY (orderId, albumId),
     FOREIGN KEY (orderId) REFERENCES ordersummary(orderId)
         ON UPDATE CASCADE ON DELETE NO ACTION,
@@ -172,7 +174,7 @@ INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) V
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Random Access Memories', 49.99, 'Assets/album_art/R-4570505-1368699003-9153.jpeg.jpg', 'Daft Punk', 13, 2013);
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Rumours', 19.99, 'Assets/album_art/u4632-rumors.jpg.jpg', 'Fleetwood Mac', 8, 1977);
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('A Love Supreme', 44.99, 'Assets/album_art/R-374507-1457737273-1090.jpeg.jpg', 'John Coltrane', 14, 1965);
-INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('What�s Going On', 24.99, 'Assets/album_art/file-20180329-189807-fofptc.jpg', 'Marvin Gaye', 9, 1971);
+INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('What''s Going On', 24.99, 'Assets/album_art/file-20180329-189807-fofptc.jpg', 'Marvin Gaye', 9, 1971);
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Kind of Blue', 29.99, 'Assets/album_art/R-368061-1464275203-2925.jpeg.jpg', 'Miles Davis', 14, 1959);
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Graceland', 24.99, 'Assets/album_art/Graceland_cover_-_Paul_Simon.jpg', 'Paul Simon', 8, 1986);
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Moondance', 29.99, 'Assets/album_art/81V0S3P-XVL._SL1400_.jpg', 'Van Morrison', 9, 1970);
@@ -182,7 +184,7 @@ INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) V
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('London Calling', 24.99, 'Assets/album_art/R-378698-1407158809-2608.jpeg.jpg', 'The Clash', 8, 1979);
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Bitches Brew', 34.99, 'Assets/album_art/81m3DGSbOIL._SL1500_.jpg', 'Miles Davis', 14, 1970);
 INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Highway 61 Revisited', 19.99, 'Assets/album_art/71kbAAdrzGL._SL1500_.jpg', 'Bob Dylan', 12, 1965);
-INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Simon and Garfunkel�s Greatest Hits', 19.99, 'Assets/album_art/7191IOQXpXL._SL1500_.jpg', 'Simon and Garfunkel', 12, 1972);
+INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) VALUES ('Simon and Garfunkel''s Greatest Hits', 19.99, 'Assets/album_art/7191IOQXpXL._SL1500_.jpg', 'Simon and Garfunkel', 12, 1972);
 
 INSERT INTO warehouse(warehouseName) VALUES ('Main warehouse');
 
@@ -195,7 +197,7 @@ INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Elizabeth', 'Elliott', 'engel@uiowa.edu', '555-666-7777', '555 Everwood Street', 'Iowa City', 'IA', '52241', 'United States', 'beth' , 'test');
 
 INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (1, '2019-10-15 10:25:55', 174.95);
-INSERT INTO orderalbum (orderId, albumId, quantity) VALUES (1, 1, 5);
+INSERT INTO orderalbum (orderId, albumId, quantity, price) VALUES (1, 1, 5, 34.99);
 
-INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (2, '2019-10-16 18:00:00', 34.99);
-INSERT INTO orderalbum (orderId, albumId, quantity) VALUES (2, 1, 1);
+INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (2, '2019-10-16 18:00:00', 39.99);
+INSERT INTO orderalbum (orderId, albumId, quantity, price) VALUES (2, 14, 1, 39.99);
