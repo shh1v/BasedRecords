@@ -33,7 +33,7 @@
           <ul>
             <li><a href="index.jsp">Home</a></li>
             <li><a href="#records">Shop</a></li>
-            <li><a href="orders.jsp">Orders</a></li>
+            <li><a href="order.jsp">Orders</a></li>
             <li><a href="account.jsp">Account</a></li>
           </ul>
         </nav>
@@ -47,7 +47,7 @@
     <!-- SEARCH BAR -->
     <!---------------->
     <div class="search">
-      <form method="get" action="http://localhost/shop/index.jsp" class="search-bar">
+      <form method="get" action="index.jsp" class="search-bar">
         <input type="text" placeholder="Search our records" name="productName" />
         <button type="submit"><img src="Assets/search-icon.png" /></button>
       </form>
@@ -58,50 +58,64 @@
     <!------------>
     <div class="filter">
       <h1>Filter by genre:</h1>
-      <select name="genre" id="genre">
+      <form method="get" action="index.jsp">
+      <select name="filter" id="genre">
     <%
-    try
-    {	// Load driver class
-      Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-    }
-    catch (java.lang.ClassNotFoundException e)
-    {
-      out.println("ClassNotFoundException: " +e);
-    }
-    // User id, password, and server information
-    String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
-    String uid = "sa";
-    String pw = "304#sa#pw";
-
-    try (Connection con = DriverManager.getConnection(url, uid, pw)) {
-      String SQL = "SELECT genreName FROM genre";
-      PreparedStatement pstmt = con.prepareStatement(SQL);
-      ResultSet rslt = pstmt.executeQuery();
-      while (rslt.next()) {
-          out.println("<option value=\"" + rslt.getString(1) + "\">" + rslt.getString(1) + "</option>");
+      try
+      {	// Load driver class
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
       }
-      out.println("</table></div>");
-    }
-    %>
+      catch (java.lang.ClassNotFoundException e)
+      {
+        out.println("ClassNotFoundException: " +e);
+      }
+      // User id, password, and server information
+      String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
+      String uid = "sa";
+      String pw = "304#sa#pw";
+
+      try (Connection con = DriverManager.getConnection(url, uid, pw)) {
+        String SQL = "SELECT genreName FROM genre";
+        PreparedStatement pstmt = con.prepareStatement(SQL);
+        ResultSet rslt = pstmt.executeQuery();
+        while (rslt.next()) {
+            out.println("<option value=\"" + rslt.getString(1) + "\">" + rslt.getString(1) + "</option>");
+        }
+      }
+      %>
       </select>
+      <button type="submit">Apply Filter</button>
+      </form>
     </div>
     <!--------------------->
     <!-- PRODUCTS (Shop) -->
     <!--------------------->
     <!-- Listing all the products from the database-->
     <%
+    String filter = request.getParameter("filter");
     String name = request.getParameter("productName");
     name = name == null ? "" : name; 
+    filter = filter == null ? "" : filter; 
 
     try (Connection con = DriverManager.getConnection(url, uid, pw)) {
       /* productId, productName, ArtistName, Genre, Price */
       String SQL = "SELECT albumId, albumName, albumArtist, genreName, albumPrice FROM album JOIN genre ON album.genreId = genre.genreId";
       if (!name.equals("")) {
         SQL += " WHERE albumName LIKE ?";
+        if (!filter.equals("")) {
+          SQL += " AND genreName LIKE ?";
+        }
       }
+      if (name.equals("") && !filter.equals("")) {
+        SQL += " WHERE genreName LIKE ?";
+      }
+      
       PreparedStatement pstmt = con.prepareStatement(SQL);
       if (!name.equals("")) {
         pstmt.setString(1, "%" + name + "%");
+      }
+      if (!filter.equals("")) {
+        pstmt.setString(!name.equals("") ? 2 : 1, "%" + filter + "%");
       }
       ResultSet rslt = pstmt.executeQuery();
       boolean hasRows = false;

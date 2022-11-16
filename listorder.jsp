@@ -40,7 +40,7 @@ out.println("<table border=\"1\"><tr><th>OrderId</th><th>Customer Id</th><th>Cus
 while(rst.next()){
 	out.println("<tr><td>"+rst.getString(1)+"</td>"+"<td>"+rst.getString(2)+"</td>"+"<td>"+rst.getString(3)+ " "+rst.getString(4)+ "</td>"+"<td>"+currFormat.format(rst.getDouble(5))+"</td>"+"</tr>");
 		out.println("<tr><td><table border=\"1\"><tr><th>Product Id</th><th>Quantity</th><th>Price </th></tr>");
-			String sql2="Select albumId, quantity, albumPrice from orderalbum where orderId=? ";
+			String sql2="Select orderalbum.albumId, quantity, albumPrice from orderalbum join album on orderalbum.albumId=album.albumId where orderId=? ";
 			PreparedStatement pstmt=con.prepareStatement(sql2);
 			pstmt.setString(1, rst.getString(1));
 			ResultSet rs=pstmt.executeQuery();
