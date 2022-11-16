@@ -114,10 +114,21 @@ select {
   background-color: #404040;
   cursor: pointer;
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   padding: 20px;
   font-size: 18px;
   color: white;
+}
+.filter button {
+  padding: 10px;
+  background: #4abeff;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: none;
+}
+.filter button:hover {
+  background-color: #f6cf00;
 }
 
 /* 
