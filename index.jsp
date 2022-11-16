@@ -32,8 +32,8 @@
         <nav>
           <ul>
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="#records">Shop</a></li>
-            <li><a href="order.jsp">Orders</a></li>
+            <li><a href="index.jsp#records">Shop</a></li>
+            <li><a href="listorder.jsp">Orders</a></li>
             <li><a href="account.jsp">Account</a></li>
           </ul>
         </nav>

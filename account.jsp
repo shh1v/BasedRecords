@@ -29,8 +29,8 @@
         <nav>
           <ul>
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="index.jsp">Shop</a></li>
-            <li><a href="orders.jsp">Orders</a></li>
+            <li><a href="index.jsp#records">Shop</a></li>
+            <li><a href="listorder.jsp">Orders</a></li>
             <li><a href="account.jsp">Account</a></li>
           </ul>
         </nav>
@@ -45,7 +45,7 @@
     <!--------------------->
     <div class="login-container">
       <h1>Sign In Here</h1>
-      <form method="get" action="accountverification.jsp" class="login-form">
+      <form method="get" action="<%="accountverification.jsp?redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "index.jsp") %>" class="login-form">
         <%
           String invalid = request.getParameter("invalid");
           if (invalid != null && invalid.equals("true"))

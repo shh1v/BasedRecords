@@ -134,6 +134,16 @@ select {
 /* 
 --- PRODUCTS & ORDER SUMMARY & CART PAGE ---
 */
+.heading {
+  text-align:center;
+  color:white;
+}
+
+.warning {
+  text-align:center;
+  color:red;
+}
+
 .products,
 .customer-info,
 .order-info,

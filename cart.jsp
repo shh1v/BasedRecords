@@ -35,8 +35,8 @@
         <nav>
           <ul>
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="index.jsp">Shop</a></li>
-            <li><a href="order.jsp">Orders</a></li>
+            <li><a href="index.jsp#records">Shop</a></li>
+            <li><a href="listorder.jsp">Orders</a></li>
             <li><a href="account.jsp">Account</a></li>
           </ul>
         </nav>
@@ -55,7 +55,7 @@
     HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 
     if (productList == null)
-    {	out.println("<H1>Your shopping cart is empty!</H1>");
+    {	out.println("<H1 class=\"heading\">Your shopping cart is empty!</H1>");
       productList = new HashMap<String, ArrayList<Object>>();
     }
     else
@@ -117,7 +117,7 @@
     }
     %>
     <div class="end-cart-options">
-      <a href="account.jsp"><h1>Checkout</h1></a>
+      <a href="order.jsp"><h1>Checkout</h1></a>
       <h2>//</h2>
       <a href="index.jsp"><h1>Continue Shopping</h1></a>
     </div>
