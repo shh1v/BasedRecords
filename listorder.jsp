@@ -22,7 +22,7 @@ catch (java.lang.ClassNotFoundException e)
 }
 
 // Useful code for formatting currency values:
-// NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+ NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 // out.println(currFormat.format(5.0);  // Prints $5.00
 
 // User id, password, and server information
@@ -38,14 +38,14 @@ String sql= "Select ordersummary.orderId,ordersummary.customerId,customer.firstN
 ResultSet rst = stmt.executeQuery(sql);
 out.println("<table border=\"1\"><tr><th>OrderId</th><th>Customer Id</th><th>Customer Name</th><th> Total Amount </th></tr>");
 while(rst.next()){
-	out.println("<tr><td>"+rst.getString(1)+"</td>"+"<td>"+rst.getString(2)+"</td>"+"<td>"+rst.getString(3)+ " "+rst.getString(4)+ "</td>"+"<td>"+rst.getString(5)+"</td>"+"</tr>");
+	out.println("<tr><td>"+rst.getString(1)+"</td>"+"<td>"+rst.getString(2)+"</td>"+"<td>"+rst.getString(3)+ " "+rst.getString(4)+ "</td>"+"<td>"+currFormat.format(rst.getDouble(5))+"</td>"+"</tr>");
 		out.println("<tr><td><table border=\"1\"><tr><th>Product Id</th><th>Quantity</th><th>Price </th></tr>");
-			String sql2="Select productId, quantity, price from orderProduct where orderId=? ";
+			String sql2="Select albumId, quantity, albumPrice from orderalbum where orderId=? ";
 			PreparedStatement pstmt=con.prepareStatement(sql2);
 			pstmt.setString(1, rst.getString(1));
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()){
-				out.println("<tr><td>"+rs.getString(1)+"</td>"+"<td>"+rs.getString(2)+"</td>"+"<td>"+rs.getString(3)+"</td>"+"</tr>");
+				out.println("<tr><td>"+rs.getString(1)+"</td>"+"<td>"+rs.getString(2)+"</td>"+"<td>"+currFormat.format(rs.getDouble(3))+"</td>"+"</tr>");
 }
 out.println("</table></td></tr>");
 
