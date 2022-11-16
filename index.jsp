@@ -61,6 +61,11 @@
       <form method="get" action="index.jsp">
       <select name="filter" id="genre">
     <%
+      String selectedFilter = request.getParameter("filter");
+
+      // Add a filter that filters nothing
+      out.println("<option value=\"\"" + (selectedFilter == null || selectedFilter.equals("") ? " selected " : "") + ">Select Filter</option>");
+      
       try
       {	// Load driver class
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -79,7 +84,8 @@
         PreparedStatement pstmt = con.prepareStatement(SQL);
         ResultSet rslt = pstmt.executeQuery();
         while (rslt.next()) {
-            out.println("<option value=\"" + rslt.getString(1) + "\">" + rslt.getString(1) + "</option>");
+          String filter = rslt.getString(1);
+          out.println("<option value=\"" + filter + "\"" + (filter.equals(selectedFilter) ? " selected " : "" ) + ">" + filter + "</option>");
         }
       }
       %>
