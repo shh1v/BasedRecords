@@ -28,7 +28,7 @@
     <div class="header">
       <div class="navbar">
         <div class="logo">
-          <a href="index.html">
+          <a href="index.jsp">
             <img src="Assets/Based Records Logo.png" width="400px" />
           </a>
         </div>
@@ -37,10 +37,10 @@
             <li><a href="index.jsp">Home</a></li>
             <li><a href="index.jsp">Shop</a></li>
             <li><a href="order.jsp">Orders</a></li>
-            <li><a href="account.html">Account</a></li>
+            <li><a href="account.jsp">Account</a></li>
           </ul>
         </nav>
-        <a href="cart.html">
+        <a href="cart.jsp">
           <img src="Assets/shopping-cart.png" width="40px" height="40px" />
         </a>
       </div>
@@ -117,9 +117,9 @@
     }
     %>
     <div class="end-cart-options">
-      <a href="account.html"><h1>Checkout</h1></a>
+      <a href="account.jsp"><h1>Checkout</h1></a>
       <h2>//</h2>
-      <a href="index.html"><h1>Continue Shopping</h1></a>
+      <a href="index.jsp"><h1>Continue Shopping</h1></a>
     </div>
   </body>
 </html>

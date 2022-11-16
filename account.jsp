@@ -22,19 +22,19 @@
     <div class="header">
       <div class="navbar">
         <div class="logo">
-          <a href="index.html">
+          <a href="index.jsp">
             <img src="Assets/Based Records Logo.png" width="400px" />
           </a>
         </div>
         <nav>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html">Shop</a></li>
-            <li><a href="orders.html">Orders</a></li>
-            <li><a href="account.html">Account</a></li>
+            <li><a href="index.jsp">Home</a></li>
+            <li><a href="index.jsp">Shop</a></li>
+            <li><a href="orders.jsp">Orders</a></li>
+            <li><a href="account.jsp">Account</a></li>
           </ul>
         </nav>
-        <a href="cart.html">
+        <a href="cart.jsp">
           <img src="Assets/shopping-cart.png" width="40px" height="40px" />
         </a>
       </div>
