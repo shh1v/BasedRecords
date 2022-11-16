@@ -89,12 +89,6 @@
             displayOrder = false;
         } else {
             try (Connection con = DriverManager.getConnection(url, uid, pw);) {
-                // Calculate total 
-                for (String album : order.keySet()) {
-                    ArrayList<Object> product = order.get(album);
-                    totalAmount += Double.parseDouble((String) product.get(2)) * ((Integer)product.get(3)).intValue();
-                }
-
                 // Get DateTime
                 LocalDateTime myDateObj = LocalDateTime.now();
                 DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -116,15 +110,14 @@
                 }
 
                 // Insert new ordersummary entry
-                stmt = con.prepareStatement("INSERT INTO ordersummary(orderDate, totalAmount, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                stmt = con.prepareStatement("INSERT INTO ordersummary(orderDate, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
                 stmt.setString(1, orderDate);
-                stmt.setDouble(2, totalAmount);
-                stmt.setString(3, address);
-                stmt.setString(4, city);
-                stmt.setString(5, state);
-                stmt.setString(6, postalCode);
-                stmt.setString(7, country);
-                stmt.setString(8, customerId);
+                stmt.setString(2, address);
+                stmt.setString(3, city);
+                stmt.setString(4, state);
+                stmt.setString(5, postalCode);
+                stmt.setString(6, country);
+                stmt.setString(7, customerId);
 
                 stmt.executeUpdate();
 
@@ -139,11 +132,20 @@
                 for (String album : order.keySet()) {
                     stmt.setString(1, orderId);
                     stmt.setString(2, (String) order.get(album).get(0)); // AlbumId
-                    stmt.setString(3, String.valueOf(order.get(album).get(3))); // Quantity
-                    stmt.setString(4, (String) order.get(album).get(2)); // Price
+                    int quantity = (int) order.get(album).get(3);
+                    stmt.setInt(3, quantity); // Quantity
+                    Double price = Double.parseDouble( (String) order.get(album).get(2));
+                    stmt.setDouble(4, price); // Price
                     stmt.executeUpdate();
+
+                    totalAmount += price * quantity;
                 }
 
+                // Update ordersummary with totalAmount
+                stmt = con.prepareStatement("UPDATE ordersummary SET totalAmount = ? WHERE orderId = ?");
+                stmt.setDouble(1, totalAmount);
+                stmt.setString(2, orderId);
+                stmt.executeUpdate();
             }
         }
 
