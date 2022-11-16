@@ -28,7 +28,8 @@ if (userid != null) {
 
         if (actualPass != null && pass.equals(actualPass)) {
             // If they entered the right password
-            response.sendRedirect("order.jsp?id=" + id);
+            session.setAttribute("userid", id);
+            response.sendRedirect("order.jsp");
         } else {
             // If they entered the wrong password
             response.sendRedirect("account.jsp?invalid=true");
