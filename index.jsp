@@ -99,7 +99,7 @@
 
     try (Connection con = DriverManager.getConnection(url, uid, pw)) {
       /* productId, productName, ArtistName, Genre, Price */
-      String SQL = "SELECT albumId, albumName, albumArtist, genreName, albumPrice FROM album JOIN genre ON album.genreId = genre.genreId";
+      String SQL = "SELECT albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL FROM album JOIN genre ON album.genreId = genre.genreId";
       if (!name.equals("")) {
         SQL += " WHERE albumName LIKE ?";
         if (!filter.equals("")) {
@@ -122,9 +122,9 @@
       while (rslt.next()) {
         if (!hasRows) {
           hasRows = true;
-          out.println("<div class=\"products\"><table id=\"records\"><tr><th>Record Name</th><th>Artist</th><th>Genre</th><th>Price</th><th>Add to cart</th></tr>");
+          out.println("<div class=\"products\"><table id=\"records\"><tr><th>Album Cover</th><th>Record Name</th><th>Artist</th><th>Genre</th><th>Price</th><th>Add to cart</th></tr>");
         }
-        out.println(String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td align=\"center\"><a href=\"addcart.jsp?id=%s&name=%s&price=%s\"><img src=\"Assets/shopping-cart-with-plus.png\" width=\"40px\" height=\"40px\"/></a></td></tr>", rslt.getString(2), rslt.getString(3), rslt.getString(4), NumberFormat.getCurrencyInstance().format(rslt.getDouble(5)) , rslt.getString(1), rslt.getString(2), rslt.getString(5)));
+        out.println(String.format("<tr><td><img src=\"%s\" width=100px></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td align=\"center\"><a href=\"addcart.jsp?id=%s&name=%s&price=%s\"><img src=\"Assets/shopping-cart-with-plus.png\" width=\"40px\" height=\"40px\"/></a></td></tr>", rslt.getString(6), rslt.getString(2), rslt.getString(3), rslt.getString(4), NumberFormat.getCurrencyInstance().format(rslt.getDouble(5)) , rslt.getString(1), rslt.getString(2), rslt.getString(5)));
       }
       out.println("</table></div>");
     }

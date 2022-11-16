@@ -75,7 +75,7 @@
 			
 			while(rst.next()) {
 				out.println("<tr><td>"+rst.getString(1)+"</td>"+"<td>"+rst.getString(2)+"</td>"+"<td>"+rst.getString(3)+ " "+rst.getString(4)+ "</td>"+"<td>"+currFormat.format(rst.getDouble(5))+"</td>"+"</tr>");
-				out.println("<tr><td colspan=4><table border=\"1\"><tr><th>Product Id</th><th>Quantity</th><th>Price </th></tr>");
+				out.println("<tr><td colspan=4><table border=\"1\"  style=\"width:100%\"><tr><th>Product Id</th><th>Quantity</th><th>Price </th></tr>");
 
 				String sql2="Select orderalbum.albumId, quantity, albumPrice from orderalbum join album on orderalbum.albumId=album.albumId where orderId=? ";
 				PreparedStatement pstmt=con.prepareStatement(sql2);
