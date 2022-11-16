@@ -1,5 +1,13 @@
 <%@ page import="java.sql.*" %>
 <%
+    System.out.println(request.getParameterMap().keySet());
+    String logout = request.getParameter("logout");
+    if (logout != null) {
+        session.setAttribute("customerId", null);
+        session.setAttribute("userid", null);
+        response.sendRedirect("account.jsp");
+        return;
+    }
     String userid = request.getParameter("userid");
     String pass = request.getParameter("pass");
 
@@ -28,9 +36,10 @@
 
             if (actualPass != null && pass.equals(actualPass)) {
                 // If they entered the right password
-                session.setAttribute("userid", id);
+                session.setAttribute("customerId", id);
+                session.setAttribute("userid", userid);
                 String redirect = request.getParameter("redirect");
-                response.sendRedirect(redirect != null ? redirect : "index.jsp");
+                response.sendRedirect(redirect != null ? redirect : "account.jsp");
             } else {
                 // If they entered the wrong password
                 response.sendRedirect("account.jsp?invalid=true&redirect=" + request.getParameter("redirect"));

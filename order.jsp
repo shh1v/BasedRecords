@@ -60,15 +60,26 @@
         double totalAmount = 0;
         boolean displayOrder = true;
 
+
         // Check if user is logged in
-        customerId = String.valueOf(session.getAttribute("userid"));
-        if (customerId == null)
+        if (session.getAttribute("customerId") == null) {
             response.sendRedirect("account.jsp?redirect=order.jsp");
+            return; // So that no attempt is made to run the rest of the file
+        } else {
+            customerId = String.valueOf(session.getAttribute("customerId"));
+        }
 
         // User id, password, and server information
         String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
         String uid = "sa";
         String pw = "304#sa#pw";
+
+        //Note: Forces loading of SQL Server driver
+        try {	// Load driver class
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (java.lang.ClassNotFoundException e) {
+            out.println("ClassNotFoundException: " +e);
+        }
 
         HashMap<String, ArrayList<Object>> order = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 
@@ -104,7 +115,7 @@
                 }
 
                 // Insert new ordersummary entry
-                stmt = con.prepareStatement("INSERT INTO ordersummary(orderDate, totalAmount, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                stmt = con.prepareStatement("INSERT INTO ordersummary(orderDate, totalAmount, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
                 stmt.setString(1, orderDate);
                 stmt.setDouble(2, totalAmount);
                 stmt.setString(3, address);
@@ -117,14 +128,9 @@
                 stmt.executeUpdate();
 
                 // Find orderId
-                stmt = con.prepareStatement("SELECT orderId FROM ordersummary WHERE customerId = ? AND orderDate = ? AND totalAmount = ?");
-                stmt.setString(1, customerId);
-                stmt.setString(2, orderDate);
-                stmt.setDouble(3, totalAmount);
-                
-                result = stmt.executeQuery();
-                if (result.next()) {
-                    orderId = result.getString("orderId");
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    orderId = String.valueOf(generatedKeys.getInt(1));
                 }
             }
         }

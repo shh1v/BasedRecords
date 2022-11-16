@@ -43,18 +43,32 @@
     <!--------------------->
     <!-- ACCOUNT (login) -->
     <!--------------------->
-    <div class="login-container">
-      <h1>Sign In Here</h1>
-      <form method="get" action="<%="accountverification.jsp?redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "index.jsp") %>" class="login-form">
-        <%
-          String invalid = request.getParameter("invalid");
-          if (invalid != null && invalid.equals("true"))
-            out.println("<h3 style=\"color:red; margin-bottom:5px;\">Invalid login information</h3>");
-        %>
-        <input type="text" name="userid" placeholder="Username" required />
-        <input type="password" name="pass" placeholder="Password" required />
-        <button type="submit" class="login-button">Login</button>
-      </form>
-    </div>
+    <% String userid = (String) session.getAttribute("userid"); %>
+      
+    <% if (userid == null) { %>
+      <div class="login-container">
+        <h1>Sign In Here</h1>
+        <form method="get" action="accountverification.jsp" class="login-form">
+          <%
+            String invalid = request.getParameter("invalid");
+            if (invalid != null && invalid.equals("true"))
+              out.println("<h3 style=\"color:red; margin-bottom:5px;\">Invalid login information</h3>");
+          %>
+          <input type="text" name="userid" placeholder="Username" required />
+          <input type="password" name="pass" placeholder="Password" required />
+          <input type="hidden" name="redirect" value="<%=request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp" %>"/>
+          <button type="submit" class="login-button">Login</button>
+        </form>
+      </div>
+    <% } else { %>
+      <div class="heading login-container">
+        <h1>Logged in as <%=userid%></h1>
+        <form method="get" action="accountverification.jsp">
+          <input type="hidden" name="logout" value=""/>
+          <input type="hidden" name="redirect" value="account.jsp"/>
+          <button type="submit" class="login-button">Logout</button>
+        </form>
+      </div>
+    <% } %>
   </body>
 </html>
