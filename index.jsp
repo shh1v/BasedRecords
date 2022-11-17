@@ -18,10 +18,10 @@
       rel="stylesheet"
     />
   </head>
-  <!-------------------------------->
-  <!-- HEADER (Logo & Navigation) -->
-  <!-------------------------------->
   <body>
+    <!-------------------------------->
+    <!-- HEADER (Logo & Navigation) -->
+    <!-------------------------------->
     <div class="header">
       <div class="navbar">
         <div class="logo">
