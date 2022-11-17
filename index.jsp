@@ -43,12 +43,34 @@
       </div>
     </div>
 
+    <%
+      // Save and load in search and filter
+      String filter = request.getParameter("filter");
+      String name = request.getParameter("productName");
+
+      if (filter == null && name != null) {
+        filter = (String) session.getAttribute("filter");
+        session.setAttribute("productName", name);
+      }
+      if (name == null && filter != null) {
+        name = (String) session.getAttribute("productName");
+        session.setAttribute("filter", filter);
+      }
+      if (name == null && filter == null) {
+        session.setAttribute("productName", null);
+        session.setAttribute("filter", null);
+      }
+
+      name = name == null ? "" : name; 
+      filter = filter == null ? "" : filter; 
+    %>
+
     <!---------------->
     <!-- SEARCH BAR -->
     <!---------------->
     <div class="search">
       <form method="get" action="index.jsp" class="search-bar">
-        <input type="text" placeholder="Search our records" name="productName" />
+        <input type="text" placeholder="Search our records" name="productName" value="<%= name %>" />
         <button type="submit"><img src="Assets/search-icon.png" /></button>
       </form>
     </div>
@@ -61,10 +83,8 @@
       <form method="get" action="index.jsp">
       <select name="filter" id="genre">
     <%
-      String selectedFilter = request.getParameter("filter");
-
       // Add a filter that filters nothing
-      out.println("<option value=\"\"" + (selectedFilter == null || selectedFilter.equals("") ? " selected " : "") + ">Select Filter</option>");
+      out.println("<option value=\"\"" + (filter.equals("") ? " selected " : "") + ">Select Filter</option>");
       
       try
       {	// Load driver class
@@ -84,8 +104,8 @@
         PreparedStatement pstmt = con.prepareStatement(SQL);
         ResultSet rslt = pstmt.executeQuery();
         while (rslt.next()) {
-          String filter = rslt.getString(1);
-          out.println("<option value=\"" + filter + "\"" + (filter.equals(selectedFilter) ? " selected " : "" ) + ">" + filter + "</option>");
+          String filter1 = rslt.getString(1);
+          out.println("<option value=\"" + filter1 + "\"" + (filter1.equals(filter) ? " selected " : "" ) + ">" + filter1 + "</option>");
         }
       }
       %>
@@ -98,11 +118,6 @@
     <!--------------------->
     <!-- Listing all the products from the database-->
     <%
-    String filter = request.getParameter("filter");
-    String name = request.getParameter("productName");
-    name = name == null ? "" : name; 
-    filter = filter == null ? "" : filter; 
-
     try (Connection con = DriverManager.getConnection(url, uid, pw)) {
       /* productId, productName, ArtistName, Genre, Price */
       String SQL = "SELECT albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL FROM album JOIN genre ON album.genreId = genre.genreId";

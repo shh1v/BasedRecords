@@ -42,6 +42,7 @@ try
     scanner.close();
     
     out.print("<br><br><h1>Database loaded.</h1>");
+    out.println("<h1><a href=\"index.jsp\">Start Shopping</a></h1>");
 }
 catch (Exception e)
 {
