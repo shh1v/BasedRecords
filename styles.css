@@ -312,3 +312,20 @@ select {
 .signup-link a:hover {
   color: #f6cf00;
 }
+
+/*
+--- Customer Info ---
+*/
+.customer-info-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#info-items th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4abeff;
+  color: rgb(30, 30, 30);
+}

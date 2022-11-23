@@ -31,7 +31,7 @@
             <li><a href="index.jsp">Home</a></li>
             <li><a href="index.jsp#records">Shop</a></li>
             <li><a href="listorder.jsp">Orders</a></li>
-            <li><a href="account.jsp">Account</a></li>
+            <li><a href="account.jsp"><%= session.getAttribute("userid") == null ? "Login" : session.getAttribute("userid") %></a></li>
           </ul>
         </nav>
         <a href="cart.jsp">
@@ -45,7 +45,7 @@
     <!--------------------->
     <% String userid = (String) session.getAttribute("userid"); %>
       
-    <% if (userid == null) { %>
+    <% if (userid == null) { %>  <!-- What to display if user is not logged in -->
       <div class="login-container">
         <h1>Sign In Here</h1>
         <form method="get" action="accountverification.jsp" class="login-form">
@@ -60,9 +60,13 @@
           <button type="submit" class="login-button">Login</button>
         </form>
       </div>
-    <% } else { %>
+    <% } else { %>  <!-- What to display if user is logged in -->
       <div class="heading login-container">
         <h1>Logged in as <%=userid%></h1>
+        <br>
+        <h2><a href="customer.jsp">Customer Info</a><h2>
+        <br>
+        <h2><a href="admin.jsp">Admin Area</a></h2>
         <form method="get" action="accountverification.jsp">
           <input type="hidden" name="logout" value=""/>
           <input type="hidden" name="redirect" value="account.jsp"/>

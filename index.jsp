@@ -34,7 +34,7 @@
             <li><a href="index.jsp">Home</a></li>
             <li><a href="index.jsp#records">Shop</a></li>
             <li><a href="listorder.jsp">Orders</a></li>
-            <li><a href="account.jsp">Account</a></li>
+            <li><a href="account.jsp"><%= session.getAttribute("userid") == null ? "Login" : session.getAttribute("userid") %></a></li>
           </ul>
         </nav>
         <a href="cart.jsp">
