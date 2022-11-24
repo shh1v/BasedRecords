@@ -73,6 +73,6 @@
           <button type="submit" class="login-button">Logout</button>
         </form>
       </div>
-    <% session.setAttribute("userid", userid);} %>
+    <% } %>
   </body>
 </html>
