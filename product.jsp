@@ -74,19 +74,27 @@
             albumYear = result.getString("albumYear");
             genreName = result.getString("genreName");
         }
+
+      closeConnection();
     %>
-    <div class="">
-        <h1><%= albumName %></h1>
-        <img src="<%= albumImageURL %>" width="400px" />
-        <p>Artist: <%= albumArtist %></p>
-        <p>Year: <%= albumYear %></p>
-        <p>Genre: <%= genreName %></p>
-        <p>Price: <%= currFormat.format(albumPrice) %></p>
+    <div class="product-name">
+      <h1><%= albumName %></h1>
     </div>
-    <div class="end-cart-options">
-        <a href="addcart.jsp?id=<%= albumId %>&name=<%= albumName %>&price=<%= albumPrice %>"><h1>Add to Cart</h1></a>
+      <div class="product">
+        <img src="<%= albumImageURL %>" width="300px" />
+        <div class="album-information">
+          <p><h2>Artist:</h2><%= albumArtist %></p>
+          <p><h2>Year:</h2><%= albumYear %></p>
+          <p><h2>Genre:</h2><%= genreName %></p>
+          <p><h2>Price:</h2><%= currFormat.format(albumPrice) %></p>
+        </div>
+      </div>
+      <div class="end-cart-options">
+        <a href="addcart.jsp?id=1&name=Currents&price=34.99"
+          ><h1>Add to Cart</h1></a
+        >
         <h2>//</h2>
         <a href="index.jsp"><h1>Continue Shopping</h1></a>
-    </div>
+      </div>
   </body>
 </html>

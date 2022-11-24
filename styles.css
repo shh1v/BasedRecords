@@ -301,7 +301,8 @@ select {
   background-color: #f6cf00;
 }
 .signup-link {
-  margin-top: 20px;
+  margin-top: 0;
+  margin-bottom: 30px;
   text-align: center;
   font-size: 16px;
   color: white;
@@ -358,4 +359,27 @@ select {
   text-align: left;
   background-color: #4abeff;
   color: rgb(30, 30, 30);
+}
+/* 
+--- PRODUCT (Displaying the info of each product) ---
+*/
+.product-name h1 {
+  color: white;
+  text-align: center;
+  border-bottom: 1px solid rgb(32, 32, 32);
+  margin-top: 50px;
+}
+.product {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+}
+.album-information {
+  color: white;
+  font-size: 20px;
+  margin-left: 20px;
+}
+.album-information p {
+  margin: 10px;
 }
