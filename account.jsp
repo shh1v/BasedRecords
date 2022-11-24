@@ -59,6 +59,9 @@
           <input type="hidden" name="redirect" value="<%=request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp" %>"/>
           <button type="submit" class="login-button">Login</button>
         </form>
+        <div class="signup-link">
+          Don't have an account? <a href="<%="signup.jsp?redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp")%>">Sign up</a>!
+        </div>
       </div>
     <% } else { %>  <!-- What to display if user is logged in -->
       <div class="heading login-container">

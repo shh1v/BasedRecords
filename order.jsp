@@ -4,7 +4,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.*" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
@@ -90,7 +90,7 @@
         } else {
             try (Connection con = DriverManager.getConnection(url, uid, pw);) {
                 // Get DateTime
-                LocalDateTime myDateObj = LocalDateTime.now();
+                LocalDateTime myDateObj = LocalDateTime.now(ZoneId.of("America/Vancouver"));
                 DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String orderDate = myDateObj.format(myFormatObj);
 
