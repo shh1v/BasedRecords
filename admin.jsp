@@ -54,6 +54,10 @@
     %>
       
     <!-- What to display if user is logged in -->
+    <div class="heading">
+			<h1>Administrators Sales Report by Day</h1>
+			<br>
+		</div>
     <div class="products">
         <table id="records">
             <tr>

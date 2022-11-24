@@ -209,7 +209,11 @@
                         }
                     %>
                 </table>
-            </div>
+                </div>
+              <div class="end-cart-options">
+                <br>
+                <a href=<%="ship.jsp?orderId=" + orderId%>><h2>Process the order</h2></a>
+              </div>
         </div>
     
     <% } else { %>

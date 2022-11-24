@@ -17,8 +17,7 @@ String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustS
 String uid = "sa";
 String pw = "304#sa#pw";
 try
-( Connection con = DriverManager.getConnection(url, uid, pw);
-Statement stmt = con.createStatement(); ) {
+( Connection con = DriverManager.getConnection(url, uid, pw)) {
 
 String sql = "SELECT * from customer where customerId=?";
 PreparedStatement pstmt=con.prepareStatement(sql);
