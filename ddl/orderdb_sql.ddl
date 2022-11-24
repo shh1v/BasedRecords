@@ -189,6 +189,10 @@ INSERT album(albumName,albumPrice,albumImageURL,albumArtist,genreId,albumYear) V
 INSERT INTO warehouse(warehouseName) VALUES ('Main warehouse');
 
 INSERT INTO albumInventory(albumId, warehouseId, quantity) VALUES (1, 1, 5);
+INSERT INTO albumInventory(albumId, warehouseId, quantity) VALUES (2, 1, 3);
+INSERT INTO albumInventory(albumId, warehouseId, quantity) VALUES (3, 1, 7);
+INSERT INTO albumInventory(albumId, warehouseId, quantity) VALUES (4, 1, 6);
+INSERT INTO albumInventory(albumId, warehouseId, quantity) VALUES (5, 1, 11);
 
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Arnold', 'Anderson', 'a.anderson@gmail.com', '204-111-2222', '103 AnyWhere Street', 'Winnipeg', 'MB', 'R3X 45T', 'Canada', 'arnold' , 'test');
 INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Bobby', 'Brown', 'bobby.brown@hotmail.ca', '572-342-8911', '222 Bush Avenue', 'Boston', 'MA', '22222', 'United States', 'bobby' , 'bobby');

@@ -14,9 +14,11 @@
 <body>
 <%
 	// TODO: Get order id
-	String orderId = String.valueOf(request.getParameter("orderId"));
+	String orderId = request.getParameter("orderId");
 	if (orderId == null) {
 		// It was not redirected from order.jsp
+		response.sendRedirect("index.jsp");
+		return;
 	} else {
 		boolean success = true;
 		String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
@@ -84,7 +86,7 @@
 	// TODO: Auto-commit should be turned back on
 %>                       				
 
-<h2><a href="shop.html">Back to Main Page</a></h2>
+<h2><a href="index.jsp">Back to Main Page</a></h2>
 
 </body>
 </html>
