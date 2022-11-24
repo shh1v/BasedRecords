@@ -34,7 +34,14 @@
 				PreparedStatement pstmt_inner = con.prepareStatement(sql_inner);
 				pstmt_inner.setString(1, rs.getString(2));
 				ResultSet rs_inner = pstmt_inner.executeQuery();
-				rs_inner.next();
+				boolean hasRows = rs_inner.next();
+				if (!hasRows) {
+					// The order can't be proccesed because of NO inventory. Rollback
+					con.rollback();
+					out.println("Shipment not done. No inventory for album Id:" + rs.getString(2));
+					success = false;
+					break;
+				}
 				if (rs_inner.getInt(1) > rs.getInt(3)) {
 					// Then the order can be placed. Insert into to shipment relation
 					String sql_ship = "INSERT INTO shipment(shipmentDate, shipmentDESC, warehouseId) VALUES (?, ?, ?)";
