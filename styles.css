@@ -313,16 +313,46 @@ select {
   color: #f6cf00;
 }
 
-/*
---- Customer Info ---
+/* 
+--- CUSTOMER (Customer information) ---
 */
-.customer-info-page {
+.customer {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 60px;
 }
 
-#info-items th {
+#profile {
+  margin-bottom: 100px;
+  border-collapse: collapse;
+  width: 70%;
+  color: white;
+}
+
+.customer-table h1 {
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid rgb(32, 32, 32);
+}
+
+#profile td,
+#profile th {
+  border: 1px solid #ddd;
+  padding: 20px;
+  font-size: 18px;
+}
+
+#profile tr:nth-child(even) {
+  background-color: #404040;
+}
+
+#profile tr:hover {
+  background-color: rgb(13, 51, 87);
+}
+
+#profile th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
