@@ -5,6 +5,7 @@
 <%@ page import="java.util.Map" %>
 <%@ include file="jdbc.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -75,7 +76,7 @@
             genreName = result.getString("genreName");
         }
 
-      closeConnection();
+        closeConnection();
     %>
     <div class="product-name">
       <h1><%= albumName %></h1>
@@ -89,10 +90,11 @@
           <p><h2>Price:</h2><%= currFormat.format(albumPrice) %></p>
         </div>
       </div>
+      <% if (albumId.equals("7")) { %>
+      <div class="product"><img width=100px alt="Latte Picture" src="displayImage.jsp?id=<%= albumId %>"/></div>
+      <% } %>
       <div class="end-cart-options">
-        <a href="addcart.jsp?id=1&name=Currents&price=34.99"
-          ><h1>Add to Cart</h1></a
-        >
+        <a href="addcart.jsp?id=1&name=Currents&price=34.99"><h1>Add to Cart</h1></a>
         <h2>//</h2>
         <a href="index.jsp"><h1>Continue Shopping</h1></a>
       </div>

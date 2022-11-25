@@ -9,14 +9,53 @@
 
 <html>
 <head>
-<title>YOUR NAME Grocery Shipment Processing</title>
-</head>
-<body>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Based Records</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Font links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <!-------------------------------->
+  <!-- HEADER (Logo & Navigation) -->
+  <!-------------------------------->
+  <body>
+    <div class="header">
+      <div class="navbar">
+        <div class="logo">
+          <a href="index.jsp">
+            <img src="Assets/Based Records Logo.png" width="400px" />
+          </a>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.jsp">Home</a></li>
+            <li><a href="index.jsp#records">Shop</a></li>
+            <li><a href="listorder.jsp">Orders</a></li>
+            <li><a href="account.jsp"><%= session.getAttribute("userid") == null ? "Login" : session.getAttribute("userid") %></a></li>
+          </ul>
+        </nav>
+        <a href="cart.jsp">
+          <img src="Assets/shopping-cart.png" width="40px" height="40px" />
+        </a>
+      </div>
+    </div>
+<div class="order-info">
+
 <%
 	// TODO: Get order id
-	String orderId = String.valueOf(request.getParameter("orderId"));
+	String orderId = request.getParameter("orderId");
 	if (orderId == null) {
 		// It was not redirected from order.jsp
+		response.sendRedirect("index.jsp");
+		return;
 	} else {
 		boolean success = true;
 		String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
@@ -29,6 +68,7 @@
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(orderId));
 			ResultSet rs = pstmt.executeQuery();
+			ArrayList<String[]> orderAlbums = new ArrayList<String[]>();
 			while (rs.next()) {
 				String sql_inner = "SELECT quantity FROM albuminventory WHERE albumId=?";
 				PreparedStatement pstmt_inner = con.prepareStatement(sql_inner);
@@ -38,11 +78,11 @@
 				if (!hasRows) {
 					// The order can't be proccesed because of NO inventory. Rollback
 					con.rollback();
-					out.println("Shipment not done. No inventory for album Id:" + rs.getString(2));
+					out.println("<div class=\"heading\">Shipment not done. No inventory for album Id:" + rs.getString(2) + "</div>");
 					success = false;
 					break;
 				}
-				if (rs_inner.getInt(1) > rs.getInt(3)) {
+				if (rs_inner.getInt(1) >= rs.getInt(3)) {
 					// Then the order can be placed. Insert into to shipment relation
 					String sql_ship = "INSERT INTO shipment(shipmentDate, shipmentDESC, warehouseId) VALUES (?, ?, ?)";
 					PreparedStatement pstmt_ship = con.prepareStatement(sql_ship);
@@ -57,34 +97,30 @@
 					pstmt_sub.setInt(1, rs_inner.getInt(1) - rs.getInt(3));
 					pstmt_sub.setString(2, rs.getString(2));
 					pstmt_sub.executeUpdate();
-					out.println(String.format("Ordered Product: %d, Qty: %d, Previous Inventory: %d, New Inventory: %d\n", rs.getInt(1), rs.getInt(3), rs_inner.getInt(1), rs_inner.getInt(1) - rs.getInt(3)));
+					orderAlbums.add(new String[]{rs.getInt("albumId") + "", rs.getInt("quantity") + "", rs_inner.getInt("quantity") + "", rs_inner.getInt("quantity") - rs.getInt("quantity") + ""});
 				} else {
 					// The order can't be proccesed because of insufficient inventory. Rollback
 					con.rollback();
-					out.println("Shipment not done. Insufficient inventroy for album Id:" + rs.getString(2));
+					out.println("<div class=\"heading\">Shipment not done. Insufficient inventroy for album Id:" + rs.getString("albumId") + "</div>");
 					success = false;
 					break;
 				}
-				if (success)
-					con.commit();
-				con.setAutoCommit(true);
 			}
+			if (success) {
+				con.commit();
+				out.println("<table id=\"order-info\"><tr><th>Ordered Product</th><th>Qty</th><th>Previous Inventory</th><th>New Inventory</th></tr>");
+				for (String[] album : orderAlbums)
+					out.println(String.format("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", album[0], album[1], album[2], album[3]));
+				out.println("</table>");
+			}
+			con.setAutoCommit(true);
 		}
 	}
-          
-	// TODO: Check if valid order id
-	
-	// TODO: Start a transaction (turn-off auto-commit)
-	
-	// TODO: Retrieve all items in order with given id
-	// TODO: Create a new shipment record.
-	// TODO: For each item verify sufficient quantity available in warehouse 1.
-	// TODO: If any item does not have sufficient inventory, cancel transaction and rollback. Otherwise, update inventory for each item.
-	
-	// TODO: Auto-commit should be turned back on
-%>                       				
-
-<h2><a href="shop.html">Back to Main Page</a></h2>
+%>   
+</table>
+</div>                    				
+<br>
+<div class="heading" style="font-size:18px"><a href="index.jsp">Back to Main Page</a></div>
 
 </body>
 </html>

@@ -41,13 +41,6 @@
       </div>
     </div>
 
-<<<<<<< HEAD
-String url = "jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True";
-String uid = "sa";
-String pw = "304#sa#pw";
-try
-( Connection con = DriverManager.getConnection(url, uid, pw)) {
-=======
     <!--------------------->
     <!-- CUSTOMER (INFO) -->
     <!--------------------->
@@ -69,7 +62,6 @@ try
         <table id="profile">
             <%
                 getConnection();
->>>>>>> 71df110b9d6d9b666546f0a7ac1d9103fc79f9cc
 
                 Statement database = con.createStatement();
                 database.execute("use orders;");
