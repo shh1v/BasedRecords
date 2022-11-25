@@ -44,7 +44,7 @@ try
 		while ( (count = istream.read(data, 0, BUFFER_SIZE)) != -1)
 			ostream.write(data, 0, count);
 
-		ostream.flush();
+		ostream.close();
 		istream.close();
 	}
 } 

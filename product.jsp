@@ -91,7 +91,7 @@
         </div>
       </div>
       <% if (albumId.equals("7")) { %>
-      <div class="product"><img width=100px alt="Latte Picture" src="displayImage.jsp?id=<%= albumId %>"/></div>
+      <div class="product"><img width=10px alt="Latte Picture" src="displayImage.jsp?id=<%= albumId %>"/></div>
       <% } %>
       <div class="end-cart-options">
         <a href="addcart.jsp?id=1&name=Currents&price=34.99"><h1>Add to Cart</h1></a>
