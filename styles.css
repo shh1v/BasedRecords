@@ -254,18 +254,24 @@ select {
 
 /* 
 --- ACOUNT (Login) ---
+--- SIGNUP ---
 */
+.login,
+.create-account {
+  padding-left: 35%;
+  padding-right: 35%;
+}
 .login-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #404040;
   border-color: white;
   border-radius: 15px;
+  margin-bottom: 100px;
 }
-.login-container h1 {
+.login h1,
+.create-account h1 {
   color: white;
   text-align: center;
   padding: 20px;
@@ -301,8 +307,7 @@ select {
   background-color: #f6cf00;
 }
 .signup-link {
-  margin-top: 0;
-  margin-bottom: 30px;
+  margin-top: 20px;
   text-align: center;
   font-size: 16px;
   color: white;
@@ -313,6 +318,7 @@ select {
 .signup-link a:hover {
   color: #f6cf00;
 }
+
 
 /* 
 --- CUSTOMER (Customer information) ---

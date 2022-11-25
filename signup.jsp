@@ -44,8 +44,9 @@
     <!-- ACCOUNT (create account) -->
     <!--------------------->
 
-    <div class="login-container">
-        <h1>Create Account</h1>
+    <div class="create-account">
+      <h1>Create Account</h1>
+      <div class="login-container">
         <form method="get" action="addcustomer.jsp" class="login-form">
             <%
             String invalid = request.getParameter("invalid");
@@ -66,6 +67,7 @@
             <input type="hidden" name="redirect" value="<%=request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp" %>"/>
             <button type="submit" class="login-button">Create Account</button>
         </form>
+    </div>
     </div>
     </body>
 </html>

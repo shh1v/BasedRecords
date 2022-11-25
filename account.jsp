@@ -46,8 +46,9 @@
     <% String userid = (String) session.getAttribute("userid"); %>
       
     <% if (userid == null) { %>  <!-- What to display if user is not logged in -->
+    <div class="login">
+      <h1>Sign In Here</h1>
       <div class="login-container">
-        <h1>Sign In Here</h1>
         <form method="get" action="accountverification.jsp" class="login-form">
           <%
             String invalid = request.getParameter("invalid");
@@ -59,23 +60,26 @@
           <input type="hidden" name="redirect" value="<%=request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp" %>"/>
           <button type="submit" class="login-button">Login</button>
         </form>
-        <div class="signup-link">
-          Don't have an account? <a href="<%="signup.jsp?redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp")%>">Sign up</a>!
-        </div>
       </div>
+      <div class="signup-link">
+        Don't have an account? <a href="<%="signup.jsp?redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp")%>">Sign up</a>!
+      </div>
+    </div>
     <% } else { %>  <!-- What to display if user is logged in -->
-      <div class="heading login-container">
-        <h1>Logged in as <%=userid%></h1>
-        <br>
-        <h2><a href="customer.jsp">Customer Info</a><h2>
-        <br>
-        <h2><a href="admin.jsp">Admin Area</a></h2>
+    <div class="login">
+      <h1>Logged in as <%=userid%></h1>
+      <div class="login-container">
         <form method="get" action="accountverification.jsp">
+          <h2><a href="customer.jsp">Customer Info</a><h2>
+          <br>
+          <h2><a href="admin.jsp">Admin Area</a></h2>
+          <br>
           <input type="hidden" name="logout" value=""/>
           <input type="hidden" name="redirect" value="account.jsp"/>
           <button type="submit" class="login-button">Logout</button>
         </form>
       </div>
+    </div>
     <% } %>
   </body>
 </html>
