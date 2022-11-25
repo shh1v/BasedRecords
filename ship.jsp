@@ -78,7 +78,7 @@
 				if (!hasRows) {
 					// The order can't be proccesed because of NO inventory. Rollback
 					con.rollback();
-					out.println("<div class=\"heading\">Shipment not done. No inventory for album Id:" + rs.getString(2) + "</div>");
+					out.println("<div class=\"heading\"><h3>Shipment cannot be processed. No inventory for album Id:" + rs.getString(2) + ". Please visit back again :)</h3></div>");
 					success = false;
 					break;
 				}
@@ -101,7 +101,7 @@
 				} else {
 					// The order can't be proccesed because of insufficient inventory. Rollback
 					con.rollback();
-					out.println("<div class=\"heading\">Shipment not done. Insufficient inventroy for album Id:" + rs.getString("albumId") + "</div>");
+					out.println("<div class=\"heading\"><h3>Shipment cannot be processed. Insufficient inventroy for album Id:" + rs.getString("albumId") + ". Please visit back again :)</h3></div>");
 					success = false;
 					break;
 				}
