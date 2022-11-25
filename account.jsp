@@ -59,27 +59,33 @@
           <input type="password" name="pass" placeholder="Password" required />
           <input type="hidden" name="redirect" value="<%=request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp" %>"/>
           <button type="submit" class="login-button">Login</button>
+          <div class="signup-link">
+            Don't have an account? <a href="<%="signup.jsp?redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp")%>">Sign up</a>!
+          </div>
         </form>
       </div>
-      <div class="signup-link">
-        Don't have an account? <a href="<%="signup.jsp?redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp")%>">Sign up</a>!
-      </div>
     </div>
+    
     <% } else { %>  <!-- What to display if user is logged in -->
-    <div class="login">
-      <h1>Logged in as <%=userid%></h1>
-      <div class="login-container">
+
+    <div class="login-header">
+      <h1>Logged in as: <%=userid%></h1>
+    </div>
+    <div class="logged-in">
+      <div class="login-actions">
         <form method="get" action="accountverification.jsp">
-          <h2><a href="customer.jsp">Customer Info</a><h2>
-          <br>
-          <h2><a href="admin.jsp">Admin Area</a></h2>
-          <br>
-          <input type="hidden" name="logout" value=""/>
-          <input type="hidden" name="redirect" value="account.jsp"/>
+          <div class="end-cart-options">
+            <a href="customer.jsp"><h1>Customer</h1></a>
+            <h2>//</h2>
+            <a href="admin.jsp"><h1>Admin Area</h1></a>
+          </div>
+          <input type="hidden" name="logout" value="" />
+          <input type="hidden" name="redirect" value="account.jsp" />
           <button type="submit" class="login-button">Logout</button>
         </form>
       </div>
     </div>
+
     <% } %>
   </body>
 </html>
