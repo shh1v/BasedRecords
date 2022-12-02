@@ -102,7 +102,7 @@
         }		
 
         out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
-        out.print("<td align=\"right\"><form method=\"get\" action=\"updateItem.jsp\"><input type=\"hidden\" id=\"id\" name=\"id\" value=" + product.get(0).toString() + "><input type=\"number\" name=\"quantity\" value=\"" + qty + "\"/><button type=\"submit\" value=\"Submit\">Update Quantity</button></form></td>");
+        out.print("<td align=\"right\"><form method=\"get\" action=\"updateItem.jsp\"><input type=\"hidden\" id=\"id\" name=\"id\" value=" + product.get(0).toString() + "><input type=\"number\" min=1 name=\"quantity\" value=\"" + qty + "\"/><button type=\"submit\" value=\"Submit\">Update Quantity</button></form></td>");
 
         out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td>");
         out.print("<td align=\"center\"><a href=\"removeItem.jsp?id=" + product.get(0) + "\"><img src=\"Assets/trash-can.png\" width=\"40px\" height=\"40px\"/></a></td></tr>");
