@@ -120,7 +120,7 @@
     <%
     try (Connection con = DriverManager.getConnection(url, uid, pw)) {
       /* productId, productName, ArtistName, Genre, Price */
-      String SQL = "SELECT albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL FROM album JOIN genre ON album.genreId = genre.genreId";
+      String SQL = "SELECT album.albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL, SUM(quantity) AS totalOrders FROM album JOIN genre ON album.genreId = genre.genreId LEFT JOIN orderalbum ON album.albumId = orderalbum.albumId GROUP BY album.albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL ORDER BY totalOrders DESC";
       if (!name.equals("")) {
         SQL += " WHERE albumName LIKE ?";
         if (!filter.equals("")) {

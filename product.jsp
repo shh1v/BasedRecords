@@ -94,7 +94,7 @@
       <div class="product"><img width=10px alt="Latte Picture" src="displayImage.jsp?id=<%= albumId %>"/></div>
       <% } %>
       <div class="end-cart-options">
-        <a href="addcart.jsp?id=1&name=Currents&price=34.99"><h1>Add to Cart</h1></a>
+        <a href="<%= String.format("addcart.jsp?id=%s&name=%s&price=%s",albumId, albumName, albumPrice) %>"><h1>Add to Cart</h1></a>
         <h2>//</h2>
         <a href="index.jsp"><h1>Continue Shopping</h1></a>
       </div>
