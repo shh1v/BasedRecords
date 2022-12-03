@@ -22,8 +22,6 @@ if (request.getParameter("userid") != null) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         // regex for phone number validation
         String phoneRegex = "^[0-9]{10}$";
-        // regex for postal code or zip code validation
-        String postalRegex = "^[0-9]{5}(?:-[0-9]{4})?$";
         // regex for strong password
         String passRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$";
         if (!pass.matches(passRegex)) {
@@ -35,34 +33,30 @@ if (request.getParameter("userid") != null) {
         } else if (!phone.matches(phoneRegex)) {
             response.sendRedirect("signup.jsp?invalid=Phone&redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp"));
             return;
-        } else if (!postalCode.matches(postalRegex)) {
-            response.sendRedirect("signup.jsp?invalid=Postal Code&redirect=" + (request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp"));
-            return;
         }
 
-    getConnection();
+        getConnection();
 
-    con.createStatement().execute("use orders;");
+        con.createStatement().execute("use orders;");
 
-    PreparedStatement ps = con.prepareStatement("insert into customer(userid,password,firstName,lastName,email,phonenum,address,city,state,postalCode,country) values(?,?,?,?,?,?,?,?,?,?,?)");
-    ps.setString(1, userid);
-    ps.setString(2, pass);
-    ps.setString(3, firstName);
-    ps.setString(4, lastName);
-    ps.setString(5, email);
-    ps.setString(6, phone);
-    ps.setString(7, address);
-    ps.setString(8, city);
-    ps.setString(9, state);
-    ps.setString(10, postalCode);
-    ps.setString(11, country);
+        PreparedStatement ps = con.prepareStatement("insert into customer(userid,password,firstName,lastName,email,phonenum,address,city,state,postalCode,country) values(?,?,?,?,?,?,?,?,?,?,?)");
+        ps.setString(1, userid);
+        ps.setString(2, pass);
+        ps.setString(3, firstName);
+        ps.setString(4, lastName);
+        ps.setString(5, email);
+        ps.setString(6, phone);
+        ps.setString(7, address);
+        ps.setString(8, city);
+        ps.setString(9, state);
+        ps.setString(10, postalCode);
+        ps.setString(11, country);
 
-    ps.executeUpdate();
+        ps.executeUpdate();
 
-    closeConnection();
+        closeConnection();
 
-    response.sendRedirect(request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp");
-
+        response.sendRedirect(request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp");
     }
 }
 
