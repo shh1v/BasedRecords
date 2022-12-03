@@ -87,6 +87,9 @@
     </div>
     <div class="end-cart-options">
       <a href="ListAllCustomers.jsp"><h1>List All Customers</h1></a>
+
+   <h2>//</h2>
+            <a href="resetdatabase.jsp"><h1>Reset Database</h1></a>
     
       </div>
   </body>
