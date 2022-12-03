@@ -23,7 +23,7 @@ String albumId = request.getParameter("albumId");
 String rating = request.getParameter("rating");
 String title = request.getParameter("title");
 String review = request.getParameter("review");
-String error = null;
+String message = null;
 
 // Check is the customer has purchased the product or not.
 boolean hasPurchased = false, hasReviewed = false;
@@ -48,29 +48,30 @@ try (Connection con = DriverManager.getConnection(url, uid, pw)) {
     }
 }
 if (!hasPurchased) {
-    // The customer has not purchased the product
+    message = "You must have already purchased the order to write a review.";
 }
-if (hasReviewed) {
-    // The customer has already reviewed the product
+else if (hasReviewed) {
+    message = "You have already witten a review for this product.";
 }
+else {
+    // Get DateTime
+    LocalDateTime myDateObj = LocalDateTime.now(ZoneId.of("America/Vancouver"));
+    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    String reviewDate = myDateObj.format(myFormatObj);
 
-// Get DateTime
-LocalDateTime myDateObj = LocalDateTime.now(ZoneId.of("America/Vancouver"));
-DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-String reviewDate = myDateObj.format(myFormatObj);
-
-// Add the review of the customer
-try (Connection con = DriverManager.getConnection(url, uid, pw)) {
-    String SQL = "INSERT INTO review(customerId, albumId, reviewRating, reviewDate, reviewTitle, reviewComment) VALUES(?, ?, ?, ?, ?, ?)";
-    PreparedStatement pstmt = con.prepareStatement(SQL);
-    pstmt.setString(1, String.valueOf(session.getAttribute("customerId")));
-    pstmt.setString(2, albumId);
-    pstmt.setString(3, rating);
-    pstmt.setString(4, reviewDate);
-    pstmt.setString(5, title);
-    pstmt.setString(6, review);
-    pstmt.executeUpdate();
+    // Add the review of the customer
+    try (Connection con = DriverManager.getConnection(url, uid, pw)) {
+        String SQL = "INSERT INTO review(customerId, albumId, reviewRating, reviewDate, reviewTitle, reviewComment) VALUES(?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = con.prepareStatement(SQL);
+        pstmt.setString(1, String.valueOf(session.getAttribute("customerId")));
+        pstmt.setString(2, albumId);
+        pstmt.setString(3, rating);
+        pstmt.setString(4, reviewDate);
+        pstmt.setString(5, title);
+        pstmt.setString(6, review);
+        pstmt.executeUpdate();
+    }
 }
-String redirectURL = String.format("product.jsp?albumId=%s&error=%s", albumId, error == null ? "" : error);
+String redirectURL = String.format("product.jsp?albumId=%s&message=%s", albumId, message == null ? "Review successfully submitted" : message);
 response.sendRedirect(redirectURL);
 %>
