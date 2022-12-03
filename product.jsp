@@ -93,8 +93,8 @@
       </div>
       <!-- Adding an option to review a product -->
       <div class="review">
-        <h3>Add a review for this product</h3>
-        </div>
+        <h2>Add a review for this product</h2>
+      </div>
         <%
         if (message != null && !message.equals("")) {
           out.println("<div class=\"review\"><h5 style=\"color: red\">**" + message + "</h5></div>");
@@ -126,9 +126,38 @@
         </form>
       </div>
       <!-- View all the past reviews -->
-      <div>
+      <div class="review">
+        <h2>Previous Reviews</h2>
+        <%
+        try {
+            String SQL = "SELECT * FROM review JOIN customer on review.customerId = customer.customerId WHERE albumId=?";
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setString(1, albumId);
+            ResultSet rslt = pstmt.executeQuery();
+            out.println("<table>");
+            while (rslt.next()) {
+              String customerName = String.format("%s %s", rslt.getString("firstName"), rslt.getString("lastName"));
+              int reviewRating = rslt.getInt("reviewRating");
+              StringBuilder RatingString = new StringBuilder();
+              for (int i = 0 ; i < reviewRating ; i++) {
+                RatingString.append("⭐");
+              }
+              for (int i = reviewRating ; i < 5 ; i++) {
+                RatingString.append("✰");
+              }
+              String reviewTitle = rslt.getString("reviewTitle");
+              String reviewDesc = rslt.getString("reviewComment");
+              out.println("<tr><td>" + customerName + "</td><td></td></tr>");
+              out.println("<tr><td>" + RatingString.toString() + "</td><td>" + reviewTitle + "</td></tr>");
+              out.println("<tr><td>" + reviewDesc + "</td></tr>");
+            }
+            out.println("</table>");
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        %>
+      </div>  
 
-      </div>
       <% if (albumId.equals("7")) { %>
       <div class="product"><img width=10px alt="Latte Picture" src="displayImage.jsp?id=<%= albumId %>"/></div>
       <% } %>
