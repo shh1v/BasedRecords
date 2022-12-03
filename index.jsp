@@ -120,7 +120,7 @@
     <%
     try (Connection con = DriverManager.getConnection(url, uid, pw)) {
       /* productId, productName, ArtistName, Genre, Price */
-      String SQL = "SELECT album.albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL, SUM(quantity) AS totalOrders FROM album JOIN genre ON album.genreId = genre.genreId LEFT JOIN orderalbum ON album.albumId = orderalbum.albumId GROUP BY album.albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL ORDER BY totalOrders DESC";
+      String SQL = "SELECT album.albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL, SUM(quantity) AS totalOrders FROM album JOIN genre ON album.genreId = genre.genreId LEFT JOIN orderalbum ON album.albumId = orderalbum.albumId";
       if (!name.equals("")) {
         SQL += " WHERE albumName LIKE ?";
         if (!filter.equals("")) {
@@ -130,6 +130,8 @@
       if (name.equals("") && !filter.equals("")) {
         SQL += " WHERE genreName LIKE ?";
       }
+
+      SQL += " GROUP BY album.albumId, albumName, albumArtist, genreName, albumPrice, albumImageURL ORDER BY totalOrders DESC";
       
       PreparedStatement pstmt = con.prepareStatement(SQL);
       if (!name.equals("")) {
