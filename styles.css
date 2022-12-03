@@ -389,6 +389,26 @@ select {
 .album-information p {
   margin: 10px;
 }
+
+.review {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-top: 20px;
+}
+
+.review-form button {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 50px;
+  border: none;
+  border-radius: 15px;
+  font-size: 18px;
+  background-color: #4abeff;
+  outline: none;
+  cursor: pointer;
+}
 /* 
 --- LOGGED IN (after "if") ---
 */
@@ -419,4 +439,54 @@ select {
 }
 .login-actions button:hover {
   background-color: #f6cf00;
+}
+
+/*
+--- Form styling ---
+*/
+.txt-center {
+  text-align: center;
+}
+.hide {
+  display: none;
+}
+
+.clear {
+  float: none;
+  clear: both;
+}
+
+.rating {
+  width: 90px;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+  position: relative;
+}
+
+.rating > label {
+  float: right;
+  display: inline;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  width: 1.1em;
+  cursor: pointer;
+  color: white;
+}
+
+.rating > label:hover,
+.rating > label:hover ~ label,
+.rating > input.radio-btn:checked ~ label {
+  color: transparent;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > input.radio-btn:checked ~ label:before,
+.rating > input.radio-btn:checked ~ label:before {
+  content: "\2605";
+  position: absolute;
+  left: 0;
+  color: #FFD700;
 }

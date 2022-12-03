@@ -64,7 +64,7 @@
 
 		try (Connection con = DriverManager.getConnection(url, uid, pw);) {
 			con.setAutoCommit(false);
-			String sql = "SELECT * FROM orderalbum WHERE orderId=?";
+			String sql = "SELECT * FROM orderalbum JOIN album ON orderalbum.albumId = album.albumId WHERE orderId=?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(orderId));
 			ResultSet rs = pstmt.executeQuery();
@@ -72,17 +72,17 @@
 			while (rs.next()) {
 				String sql_inner = "SELECT quantity FROM albuminventory WHERE albumId=?";
 				PreparedStatement pstmt_inner = con.prepareStatement(sql_inner);
-				pstmt_inner.setString(1, rs.getString(2));
+				pstmt_inner.setString(1, rs.getString("albumId"));
 				ResultSet rs_inner = pstmt_inner.executeQuery();
 				boolean hasRows = rs_inner.next();
 				if (!hasRows) {
 					// The order can't be proccesed because of NO inventory. Rollback
 					con.rollback();
-					out.println("<div class=\"heading\"><h3>Shipment cannot be processed. No inventory for album Id:" + rs.getString(2) + ". Please visit back again :)</h3></div>");
+					out.println("<div class=\"heading\"><h3>Shipment cannot be processed. No inventory for \"" + rs.getString("albumName") + "\". Please visit back again :)</h3></div>");
 					success = false;
 					break;
 				}
-				if (rs_inner.getInt(1) >= rs.getInt(3)) {
+				if (rs_inner.getInt(1) >= rs.getInt("quantity")) {
 					// Then the order can be placed. Insert into to shipment relation
 					String sql_ship = "INSERT INTO shipment(shipmentDate, shipmentDESC, warehouseId) VALUES (?, ?, ?)";
 					PreparedStatement pstmt_ship = con.prepareStatement(sql_ship);
@@ -94,14 +94,14 @@
 					// Subtracting the quatity of the products in order from the quatity in the inventory
 					String sql_sub = "UPDATE albuminventory SET quantity=? WHERE albumId=?";
 					PreparedStatement pstmt_sub = con.prepareStatement(sql_sub);
-					pstmt_sub.setInt(1, rs_inner.getInt(1) - rs.getInt(3));
-					pstmt_sub.setString(2, rs.getString(2));
+					pstmt_sub.setInt(1, rs_inner.getInt(1) - rs.getInt("quantity"));
+					pstmt_sub.setString(2, rs.getString("albumId"));
 					pstmt_sub.executeUpdate();
 					orderAlbums.add(new String[]{rs.getInt("albumId") + "", rs.getInt("quantity") + "", rs_inner.getInt("quantity") + "", rs_inner.getInt("quantity") - rs.getInt("quantity") + ""});
 				} else {
 					// The order can't be proccesed because of insufficient inventory. Rollback
 					con.rollback();
-					out.println("<div class=\"heading\"><h3>Shipment cannot be processed. Insufficient inventroy for album Id:" + rs.getString("albumId") + ". Please visit back again :)</h3></div>");
+					out.println("<div class=\"heading\"><h3>Shipment cannot be processed. Insufficient inventroy for album Id:" + rs.getString("albumName") + ". Please visit back again :)</h3></div>");
 					success = false;
 					break;
 				}

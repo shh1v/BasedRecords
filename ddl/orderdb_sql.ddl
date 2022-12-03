@@ -119,11 +119,12 @@ CREATE TABLE albuminventory (
 );
 
 CREATE TABLE review (
-    reviewId            INT IDENTITY,
-    reviewRating        INT,
-    reviewDate          DATETIME,   
+    reviewId            INT IDENTITY, 
     customerId          INT,
     albumId           INT,
+    reviewRating        INT,
+    reviewDate          DATETIME,  
+    reviewTitle         VARCHAR(100),
     reviewComment       VARCHAR(1000),          
     PRIMARY KEY (reviewId),
     FOREIGN KEY (customerId) REFERENCES customer(customerId)
