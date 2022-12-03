@@ -90,6 +90,39 @@
           <p><h2>Price:</h2><%= currFormat.format(albumPrice) %></p>
         </div>
       </div>
+      <!-- Adding an option to review a product -->
+      <div class="review">
+        <h3>Add a review for this product</h3>
+      </div>
+      <div class="review">
+        <form method="get" action="addreview.jsp">
+          <label for="rating">Add an Overall Rating</label><br>
+          <div class="rating">
+            <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
+            <label for="star5">☆</label>
+            <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
+            <label for="star4">☆</label>
+            <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+            <label for="star3">☆</label>
+            <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
+            <label for="star2">☆</label>
+            <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
+            <label for="star1">☆</label>
+            <div class="clear"></div>
+            </div>
+          <label for="headline">Add a headline</label><br>
+          <input id="headline" type="text" name="title"><br>
+
+          <label for="details">Add a written review</label><br>
+          <textarea id="details" rows = "5" cols = "60" name = "review"></textarea><br>
+          <input type="hidden" name= "albumId" value=<%= albumId %>>
+          <input name="Submit" type="submit">
+        </form>
+      </div>
+      <!-- View all the past reviews -->
+      <div>
+
+      </div>
       <% if (albumId.equals("7")) { %>
       <div class="product"><img width=10px alt="Latte Picture" src="displayImage.jsp?id=<%= albumId %>"/></div>
       <% } %>
