@@ -80,6 +80,13 @@
             out.println("ClassNotFoundException: " +e);
         }
 
+        Connection con = null;
+        try {
+          con = DriverManager.getConnection(url, uid, pw);
+        } catch (SQLException e) {
+          out.println("SQLException: " + e);
+        }
+          
         HashMap<String, ArrayList<Object>> order = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 
         NumberFormat currFormat = NumberFormat.getCurrencyInstance();
@@ -87,66 +94,64 @@
         if (order == null || order.size() == 0) {
             displayOrder = false;
         } else {
-            try (Connection con = DriverManager.getConnection(url, uid, pw);) {
-                // Get DateTime
-                LocalDateTime myDateObj = LocalDateTime.now(ZoneId.of("America/Vancouver"));
-                DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String orderDate = myDateObj.format(myFormatObj);
+              // Get DateTime
+              LocalDateTime myDateObj = LocalDateTime.now(ZoneId.of("America/Vancouver"));
+              DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+              String orderDate = myDateObj.format(myFormatObj);
 
-                // Address info
-                String address="", city="", state="", postalCode="", country="";
-            
-                PreparedStatement stmt = con.prepareStatement("SELECT firstName, lastName, address, city, state, postalCode, country FROM customer WHERE customerId = ?");
-                stmt.setString(1, customerId);
-                ResultSet result = stmt.executeQuery();
-                if (result.next()) {
-                    customerName = result.getString("firstName") + " " + result.getString("lastName");
-                    address = result.getString("address");
-                    city = result.getString("city");
-                    state = result.getString("state");
-                    postalCode = result.getString("postalCode");
-                    country = result.getString("country");
-                }
+              // Address info
+              String address="", city="", state="", postalCode="", country="";
+          
+              PreparedStatement stmt = con.prepareStatement("SELECT firstName, lastName, address, city, state, postalCode, country FROM customer WHERE customerId = ?");
+              stmt.setString(1, customerId);
+              ResultSet result = stmt.executeQuery();
+              if (result.next()) {
+                  customerName = result.getString("firstName") + " " + result.getString("lastName");
+                  address = result.getString("address");
+                  city = result.getString("city");
+                  state = result.getString("state");
+                  postalCode = result.getString("postalCode");
+                  country = result.getString("country");
+              }
 
-                // Insert new ordersummary entry
-                stmt = con.prepareStatement("INSERT INTO ordersummary(orderDate, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-                stmt.setString(1, orderDate);
-                stmt.setString(2, address);
-                stmt.setString(3, city);
-                stmt.setString(4, state);
-                stmt.setString(5, postalCode);
-                stmt.setString(6, country);
-                stmt.setString(7, customerId);
+              // Insert new ordersummary entry
+              stmt = con.prepareStatement("INSERT INTO ordersummary(orderDate, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+              stmt.setString(1, orderDate);
+              stmt.setString(2, address);
+              stmt.setString(3, city);
+              stmt.setString(4, state);
+              stmt.setString(5, postalCode);
+              stmt.setString(6, country);
+              stmt.setString(7, customerId);
 
-                stmt.executeUpdate();
+              stmt.executeUpdate();
 
-                // Find orderId
-                ResultSet generatedKeys = stmt.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    orderId = String.valueOf(generatedKeys.getInt(1));
-                }
+              // Find orderId
+              ResultSet generatedKeys = stmt.getGeneratedKeys();
+              if (generatedKeys.next()) {
+                  orderId = String.valueOf(generatedKeys.getInt(1));
+              }
 
-                // Add each ordered product to the orderalbum table
-                stmt = con.prepareStatement("INSERT INTO orderalbum VALUES (?, ?, ?, ?)");
-                for (String album : order.keySet()) {
-                    stmt.setString(1, orderId);
-                    stmt.setString(2, (String) order.get(album).get(0)); // AlbumId
-                    int quantity = (int) order.get(album).get(3);
-                    stmt.setInt(3, quantity); // Quantity
-                    Double price = Double.parseDouble( (String) order.get(album).get(2));
-                    stmt.setDouble(4, price); // Price
-                    stmt.executeUpdate();
+              // Add each ordered product to the orderalbum table
+              stmt = con.prepareStatement("INSERT INTO orderalbum VALUES (?, ?, ?, ?)");
+              for (String album : order.keySet()) {
+                  stmt.setString(1, orderId);
+                  stmt.setString(2, (String) order.get(album).get(0)); // AlbumId
+                  int quantity = (int) order.get(album).get(3);
+                  stmt.setInt(3, quantity); // Quantity
+                  Double price = Double.parseDouble( (String) order.get(album).get(2));
+                  stmt.setDouble(4, price); // Price
+                  stmt.executeUpdate();
 
-                    totalAmount += price * quantity;
-                }
+                  totalAmount += price * quantity;
+              }
 
-                // Update ordersummary with totalAmount
-                stmt = con.prepareStatement("UPDATE ordersummary SET totalAmount = ? WHERE orderId = ?");
-                stmt.setDouble(1, totalAmount);
-                stmt.setString(2, orderId);
-                stmt.executeUpdate();
+              // Update ordersummary with totalAmount
+              stmt = con.prepareStatement("UPDATE ordersummary SET totalAmount = ? WHERE orderId = ?");
+              stmt.setDouble(1, totalAmount);
+              stmt.setString(2, orderId);
+              stmt.executeUpdate();
             }
-        }
 
         // Clear order from session history
         session.setAttribute("productList", null);
@@ -209,6 +214,39 @@
                     %>
                 </table>
                 </div>
+                <div class="heading">
+                  <br><h1>Shipping Address</h1><br>
+                      <%
+                          Statement database = con.createStatement();
+                          database.execute("use orders;");
+
+                          PreparedStatement stmt = con.prepareStatement("SELECT firstName, lastName, address, city, state, postalCode, country FROM customer WHERE customerId = ?");
+                          stmt.setString(1, customerId);
+
+                          ResultSet result = stmt.executeQuery();
+
+                          String firstName = "", lastName = "", address = "", city = "", state = "", postalCode = "", country = "";
+                          if (result.next()) {
+                              firstName = result.getString("firstName");
+                              lastName = result.getString("lastName");
+                              address = result.getString("address");
+                              city = result.getString("city");
+                              state = result.getString("state");
+                              postalCode = result.getString("postalCode");
+                              country = result.getString("country");
+                          }
+
+                          try {
+                            con.close();
+                          } catch (Exception e) {
+                            e.printStackTrace();
+                          }
+                      %>
+                <p><%=firstName%> <%=lastName%></p>
+                <p><%=address%></p>
+                <p><%=city%>, <%=state%> <%=postalCode%></p>
+                <p><%=country%></p>
+              </div>
               <div class="end-cart-options">
                 <br>
                 <a href=<%="ship.jsp?orderId=" + orderId%>><h2>Ship the order</h2></a>
@@ -222,54 +260,5 @@
         </div>
     
     <% } %>
-
-    <% 
-    // Get customer id
-    String custId = request.getParameter("customerId");
-    @SuppressWarnings({"unchecked"})
-    HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
-
-    // Determine if valid customer id was entered
-    // Determine if there are products in the shopping cart
-    // If either are not true, display an error message
-
-    // Make connection
-
-    // Save order information to database
-
-
-      /*
-      // Use retrieval of auto-generated keys.
-      PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);			
-      ResultSet keys = pstmt.getGeneratedKeys();
-      keys.next();
-      int orderId = keys.getInt(1);
-      */
-
-    // Insert each item into OrderProduct table using OrderId from previous INSERT
-
-    // Update total amount for order record
-
-    // Here is the code to traverse through a HashMap
-    // Each entry in the HashMap is an ArrayList with item 0-id, 1-name, 2-quantity, 3-price
-
-    /*
-      Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
-      while (iterator.hasNext())
-      { 
-        Map.Entry<String, ArrayList<Object>> entry = iterator.next();
-        ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
-        String productId = (String) product.get(0);
-            String price = (String) product.get(2);
-        double pr = Double.parseDouble(price);
-        int qty = ( (Integer)product.get(3)).intValue();
-                ...
-      }
-    */
-
-    // Print out order summary
-
-    // Clear cart if order placed successfully
-    %>
   </body>
 </html>
