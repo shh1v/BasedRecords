@@ -40,7 +40,8 @@
           <img src="Assets/shopping-cart.png" width="40px" height="40px" />
         </a>
       </div>
-    </div>
+    </div> 
+
 
     <!--------------------->
     <!-- CUSTOMER (INFO) -->
@@ -81,7 +82,12 @@
                 }
 
             %>
+           
         </table>
     </div>
+    <div class="end-cart-options">
+      <a href="ListAllCustomers.jsp"><h1>List All Customers</h1></a>
+    
+      </div>
   </body>
 </html>
