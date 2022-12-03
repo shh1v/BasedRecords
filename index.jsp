@@ -142,12 +142,25 @@
       }
       ResultSet rslt = pstmt.executeQuery();
       boolean hasRows = false;
+
+      // Get the logged in user's most purchased genre
+      String mostPurchasedGenre = "";
+      if (session.getAttribute("customerId") != null) {
+        String SQL2 = "SELECT TOP 1 genreName FROM ordersummary o JOIN orderalbum o2 ON o.orderId = o2.orderId JOIN album a ON a.albumId = o2.albumId JOIN genre g ON g.genreId = a.genreId WHERE customerId = ? GROUP BY g.genreId, genreName ORDER BY SUM(quantity) DESC";
+        PreparedStatement pstmt2 = con.prepareStatement(SQL2);
+        pstmt2.setString(1, session.getAttribute("customerId").toString());
+        ResultSet rslt2 = pstmt2.executeQuery();
+        if (rslt2.next()) {
+          mostPurchasedGenre = rslt2.getString("genreName");
+        }
+      }
+
       while (rslt.next()) {
         if (!hasRows) {
           hasRows = true;
           out.println("<div class=\"products\"><table id=\"records\"><tr><th>Album Cover</th><th>Record Name</th><th>Artist</th><th>Genre</th><th>Price</th><th>Add to cart</th></tr>");
         }
-        out.println(String.format("<tr><td><a href=\"product.jsp?albumId=%s\"><img src=\"%s\" width=100px></a></td><td><a href=\"product.jsp?albumId=%s\">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td align=\"center\"><a href=\"addcart.jsp?id=%s&name=%s&price=%s\"><img src=\"Assets/shopping-cart-with-plus.png\" width=\"40px\" height=\"40px\"/></a></td></tr>", rslt.getString(1), rslt.getString(6), rslt.getString(1), rslt.getString(2), rslt.getString(3), rslt.getString(4), NumberFormat.getCurrencyInstance().format(rslt.getDouble(5)) , rslt.getString(1), rslt.getString(2), rslt.getString(5)));
+        out.println(String.format("<tr><td><a href=\"product.jsp?albumId=%s\"><img src=\"%s\" width=100px></a></td><td><a href=\"product.jsp?albumId=%s\" title=\"%s\">%s<span style=\"color:yellow\">%s</span></a></td><td>%s</td><td>%s</td><td>%s</td><td align=\"center\"><a href=\"addcart.jsp?id=%s&name=%s&price=%s\"><img src=\"Assets/shopping-cart-with-plus.png\" width=\"40px\" height=\"40px\"/></a></td></tr>", rslt.getString(1), rslt.getString(6), rslt.getString(1), (rslt.getString("genreName").equals(mostPurchasedGenre) ? "Recommended" : ""), rslt.getString(2), (rslt.getString("genreName").equals(mostPurchasedGenre) ? " ⭐" : ""), rslt.getString(3), rslt.getString(4), NumberFormat.getCurrencyInstance().format(rslt.getDouble(5)) , rslt.getString(1), rslt.getString(2), rslt.getString(5)));
       }
       out.println("</table></div>");
     }
