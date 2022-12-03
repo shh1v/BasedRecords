@@ -50,8 +50,8 @@
         <form method="get" action="addcustomer.jsp" class="login-form">
             <%
             String invalid = request.getParameter("invalid");
-            if (invalid != null && invalid.equals("true"))
-                out.println("<h3 style=\"color:red; margin-bottom:5px;\">Invalid login information</h3>");
+            if (invalid != null)
+                out.println("<h3 style=\"color:red; margin-bottom:5px;\">Invalid login information: " + request.getParameter("invalid") + "</h3>");
             %>
             <input type="text" name="userid" placeholder="Username" required />
             <input type="password" name="pass" placeholder="Password" required />
