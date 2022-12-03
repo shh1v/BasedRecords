@@ -94,12 +94,12 @@
       <!-- Adding an option to review a product -->
       <div class="review">
         <h3>Add a review for this product</h3>
+        </div>
         <%
         if (message != null && !message.equals("")) {
-          out.println("<div><h5 style=\"color: yellow\">" + message + "</h5></div>");
+          out.println("<div class=\"review\"><h5 style=\"color: red\">**" + message + "</h5></div>");
         }
         %>
-      </div>
       <div class="review">
         <form method="get" action="addreview.jsp">
           <label for="rating">Add an Overall Rating</label><br>
