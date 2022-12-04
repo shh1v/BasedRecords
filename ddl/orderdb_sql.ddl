@@ -4,6 +4,12 @@ go;
 USE orders;
 go;
 
+CREATE TABLE stateTax (
+	country	VARCHAR(40),
+	state	VARCHAR(40),
+	taxRate	DECIMAL(10,10),
+	PRIMARY KEY (country, state)
+);
 
 CREATE TABLE customer (
     customerId          INT IDENTITY,
@@ -13,12 +19,13 @@ CREATE TABLE customer (
     phonenum            VARCHAR(20),
     address             VARCHAR(50),
     city                VARCHAR(40),
-    state               VARCHAR(20),
+    state               VARCHAR(40),
     postalCode          VARCHAR(20),
     country             VARCHAR(40),
     userid              VARCHAR(20),
     password            VARCHAR(30),
-    PRIMARY KEY (customerId)
+    PRIMARY KEY (customerId),
+    FOREIGN KEY (country, state) REFERENCES stateTax(country, state)
 );
 
 CREATE TABLE paymentmethod (
@@ -38,7 +45,7 @@ CREATE TABLE ordersummary (
     totalAmount         DECIMAL(10,2),
     shiptoAddress       VARCHAR(50),
     shiptoCity          VARCHAR(40),
-    shiptoState         VARCHAR(20),
+    shiptoState         VARCHAR(40),
     shiptoPostalCode    VARCHAR(20),
     shiptoCountry       VARCHAR(40),
     customerId          INT,
@@ -133,6 +140,71 @@ CREATE TABLE review (
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+INSERT INTO stateTax VALUES ('United States','Alabama', 0.0924);
+INSERT INTO stateTax VALUES ('United States','Alaska', 0.0176);
+INSERT INTO stateTax VALUES ('United States','Arizona', 0.084);
+INSERT INTO stateTax VALUES ('United States','Arkansas', 0.0947);
+INSERT INTO stateTax VALUES ('United States','California', 0.0882);
+INSERT INTO stateTax VALUES ('United States','Colorado', 0.0777);
+INSERT INTO stateTax VALUES ('United States','Connecticut', 0.0635);
+INSERT INTO stateTax VALUES ('United States','Delaware', 0);
+INSERT INTO stateTax VALUES ('United States','D.C.', 0.06);
+INSERT INTO stateTax VALUES ('United States','Florida', 0.0701);
+INSERT INTO stateTax VALUES ('United States','Georgia', 0.0735);
+INSERT INTO stateTax VALUES ('United States','Hawaii', 0.0444);
+INSERT INTO stateTax VALUES ('United States','Idaho', 0.0602);
+INSERT INTO stateTax VALUES ('United States','Illinois', 0.0881);
+INSERT INTO stateTax VALUES ('United States','Indiana', 0.07);
+INSERT INTO stateTax VALUES ('United States','Iowa', 0.0694);
+INSERT INTO stateTax VALUES ('United States','Kansas', 0.087);
+INSERT INTO stateTax VALUES ('United States','Kentucky', 0.06);
+INSERT INTO stateTax VALUES ('United States','Louisiana', 0.0955);
+INSERT INTO stateTax VALUES ('United States','Maine', 0.055);
+INSERT INTO stateTax VALUES ('United States','Maryland', 0.06);
+INSERT INTO stateTax VALUES ('United States','Massachusetts', 0.0625);
+INSERT INTO stateTax VALUES ('United States','Michigan', 0.06);
+INSERT INTO stateTax VALUES ('United States','Minnesota', 0.0749);
+INSERT INTO stateTax VALUES ('United States','Mississippi', 0.0707);
+INSERT INTO stateTax VALUES ('United States','Missouri', 0.0829);
+INSERT INTO stateTax VALUES ('United States','Montana', 0);
+INSERT INTO stateTax VALUES ('United States','Nebraska', 0.0694);
+INSERT INTO stateTax VALUES ('United States','Nevada', 0.0823);
+INSERT INTO stateTax VALUES ('United States','New Hampshire', 0);
+INSERT INTO stateTax VALUES ('United States','New Jersey', 0.066);
+INSERT INTO stateTax VALUES ('United States','New Mexico', 0.0784);
+INSERT INTO stateTax VALUES ('United States','New York', 0.0852);
+INSERT INTO stateTax VALUES ('United States','North Carolina', 0.0698);
+INSERT INTO stateTax VALUES ('United States','North Dakota', 0.0696);
+INSERT INTO stateTax VALUES ('United States','Ohio', 0.0722);
+INSERT INTO stateTax VALUES ('United States','Oklahoma', 0.0897);
+INSERT INTO stateTax VALUES ('United States','Oregon', 0);
+INSERT INTO stateTax VALUES ('United States','Pennsylvania', 0.0634);
+INSERT INTO stateTax VALUES ('United States','Rhode Island', 0.07);
+INSERT INTO stateTax VALUES ('United States','South Carolina', 0.0744);
+INSERT INTO stateTax VALUES ('United States','South Dakota', 0.064);
+INSERT INTO stateTax VALUES ('United States','Tennessee', 0.0955);
+INSERT INTO stateTax VALUES ('United States','Texas', 0.082);
+INSERT INTO stateTax VALUES ('United States','Utah', 0.0719);
+INSERT INTO stateTax VALUES ('United States','Vermont', 0.0624);
+INSERT INTO stateTax VALUES ('United States','Virginia', 0.0575);
+INSERT INTO stateTax VALUES ('United States','Washington', 0.0929);
+INSERT INTO stateTax VALUES ('United States','West Virginia', 0.0652);
+INSERT INTO stateTax VALUES ('United States','Wisconsin', 0.0543);
+INSERT INTO stateTax VALUES ('United States','Wyoming', 0.0522);
+INSERT INTO stateTax VALUES ('Canada','Alberta', 0.05);
+INSERT INTO stateTax VALUES ('Canada','Northwest Territories', 0.05);
+INSERT INTO stateTax VALUES ('Canada','Nunavut', 0.05);
+INSERT INTO stateTax VALUES ('Canada','Yukon', 0.05);
+INSERT INTO stateTax VALUES ('Canada','Saskatchewan', 0.11);
+INSERT INTO stateTax VALUES ('Canada','British Columbia', 0.12);
+INSERT INTO stateTax VALUES ('Canada','Manitoba', 0.12);
+INSERT INTO stateTax VALUES ('Canada','Ontario', 0.13);
+INSERT INTO stateTax VALUES ('Canada','Quebec', 0.14975);
+INSERT INTO stateTax VALUES ('Canada','New Brunswick', 0.15);
+INSERT INTO stateTax VALUES ('Canada','Newfoundland and Labrador', 0.15);
+INSERT INTO stateTax VALUES ('Canada','Nova Scotia', 0.15);
+INSERT INTO stateTax VALUES ('Canada','Prince Edward Island', 0.15);
+
 INSERT INTO genre(genreName) VALUES ('Indie/Alternative');
 INSERT INTO genre(genreName) VALUES ('Rap');
 INSERT INTO genre(genreName) VALUES ('Heavy Metal');
@@ -196,11 +268,11 @@ INSERT INTO albumInventory(albumId, warehouseId, quantity) VALUES (3, 1, 7);
 INSERT INTO albumInventory(albumId, warehouseId, quantity) VALUES (4, 1, 6);
 INSERT INTO albumInventory(albumId, warehouseId, quantity) VALUES (5, 1, 11);
 
-INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Arnold', 'Anderson', 'a.anderson@gmail.com', '204-111-2222', '103 AnyWhere Street', 'Winnipeg', 'MB', 'R3X 45T', 'Canada', 'arnold' , 'test');
-INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Bobby', 'Brown', 'bobby.brown@hotmail.ca', '572-342-8911', '222 Bush Avenue', 'Boston', 'MA', '22222', 'United States', 'bobby' , 'bobby');
-INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Candace', 'Cole', 'cole@charity.org', '333-444-5555', '333 Central Crescent', 'Chicago', 'IL', '33333', 'United States', 'candace' , 'password');
-INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Darren', 'Doe', 'oe@doe.com', '250-807-2222', '444 Dover Lane', 'Kelowna', 'BC', 'V1V 2X9', 'Canada', 'darren' , 'pw');
-INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Elizabeth', 'Elliott', 'engel@uiowa.edu', '555-666-7777', '555 Everwood Street', 'Iowa City', 'IA', '52241', 'United States', 'beth' , 'test');
+INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Arnold', 'Anderson', 'a.anderson@gmail.com', '204-111-2222', '103 AnyWhere Street', 'Winnipeg', 'Manitoba', 'R3X 45T', 'Canada', 'arnold' , 'test');
+INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Bobby', 'Brown', 'bobby.brown@hotmail.ca', '572-342-8911', '222 Bush Avenue', 'Boston', 'Massachusetts', '22222', 'United States', 'bobby' , 'bobby');
+INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Candace', 'Cole', 'cole@charity.org', '333-444-5555', '333 Central Crescent', 'Chicago', 'Illinois', '33333', 'United States', 'candace' , 'password');
+INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Darren', 'Doe', 'oe@doe.com', '250-807-2222', '444 Dover Lane', 'Kelowna', 'British Columbia', 'V1V 2X9', 'Canada', 'darren' , 'pw');
+INSERT INTO customer (firstName, lastName, email, phonenum, address, city, state, postalCode, country, userid, password) VALUES ('Elizabeth', 'Elliott', 'engel@uiowa.edu', '555-666-7777', '555 Everwood Street', 'Iowa City', 'Iowa', '52241', 'United States', 'beth' , 'test');
 
 INSERT INTO ordersummary (customerId, orderDate, totalAmount) VALUES (1, '2019-10-15 10:25:55', 174.95);
 INSERT INTO orderalbum (orderId, albumId, quantity, price) VALUES (1, 1, 5, 34.99);

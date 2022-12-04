@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*" %>
+<%@ include file="jdbc.jsp" %>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -61,9 +62,33 @@
             <input type="text" name="phone" placeholder="Phone Number" required />
             <input type="text" name="address" placeholder="Address" required />
             <input type="text" name="city" placeholder="City" required />
-            <input type="text" name="state" placeholder="State" required />
+            <select style="text-align:left;margin-top:5px;margin-bottom:0px" type="text" name="state" placeholder="State" required>
+              <%
+                getConnection();
+
+                con.createStatement().execute("USE orders");
+
+                PreparedStatement ps = con.prepareStatement("SELECT DISTINCT state FROM stateTax");
+                ResultSet states = ps.executeQuery();
+
+                while (states.next()) {
+                    out.println("<option value=\"" + states.getString("state") + "\">" + states.getString("state") + "</option>");
+                }
+              %>
+            </select>
             <input type="text" name="postalCode" placeholder="Postal Code" required />
-            <input type="text" name="country" placeholder="Country" required />
+            <select style="text-align:left;margin-top:5px;margin-bottom:0px" type="text" name="country" placeholder="Country" required >
+              <%
+                PreparedStatement ps2 = con.prepareStatement("SELECT DISTINCT country FROM stateTax");
+                ResultSet countries = ps2.executeQuery();
+
+                while (countries.next()) {
+                    out.println("<option value=\"" + countries.getString("country") + "\">" + countries.getString("country") + "</option>");
+                }
+
+                closeConnection();
+              %>
+            </select>
             <input type="hidden" name="redirect" value="<%=request.getParameter("redirect") != null ? request.getParameter("redirect") : "account.jsp" %>"/>
             <button type="submit" class="login-button">Create Account</button>
         </form>

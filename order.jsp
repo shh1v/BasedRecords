@@ -56,7 +56,7 @@
     <%
         // Global variable that we need while constructing the tables
         String orderId = "default", customerId = "default", customerName = "default";
-        double totalAmount = 0;
+        double totalAmount = 0, finalAmount = 0, tax = 0;;
         boolean displayOrder = true;
 
 
@@ -146,6 +146,16 @@
                   totalAmount += price * quantity;
               }
 
+              // Add tax
+              stmt = con.prepareStatement("SELECT taxRate FROM customer c JOIN stateTax s ON c.country = s.country AND c.state = s.state WHERE customerId = ?");
+              stmt.setString(1, customerId);
+              ResultSet taxTable = stmt.executeQuery();
+
+              if (taxTable.next())
+                  tax = totalAmount * taxTable.getDouble("taxRate");
+
+              finalAmount = totalAmount + tax;
+
               // Update ordersummary with totalAmount
               stmt = con.prepareStatement("UPDATE ordersummary SET totalAmount = ? WHERE orderId = ?");
               stmt.setDouble(1, totalAmount);
@@ -176,6 +186,7 @@
                     <th>Order ID</th>
                     <th>Customer ID</th>
                     <th>Customer Name</th>
+                    <th>Tax</th>
                     <th>Total Amount</th>
                 </tr>
                 <!-- Values -->
@@ -183,7 +194,8 @@
                     <td><%=orderId%></td>
                     <td><%=customerId%></td>
                     <td><%=customerName%></td>
-                    <td><%=currFormat.format(totalAmount)%></td>
+                    <td><%=currFormat.format(tax)%></td>
+                    <td><%=currFormat.format(finalAmount)%></td>
                 </tr>
                 </table>
             </div>
