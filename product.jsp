@@ -100,6 +100,7 @@
         %>
       <div class="review">
         <form method="get" action="addreview.jsp">
+
           <div class="rating">
             <input id="star5" name="rating" type="radio" value="5" class="radio-btn hide" />
             <label for="star5">☆</label>
@@ -113,11 +114,11 @@
             <label for="star1">☆</label>
             <div class="clear"></div>
             </div>
-          <label for="headline">Add a headline</label>
-          <input id="headline" type="text" name="title">
+        
+          <input id="headline" type="text" placeholder="Add a headline" name="title"/>
 
-          <label for="details">Add a written review</label>
-          <textarea id="details" rows = "5" cols = "60" name = "review"></textarea>
+          <textarea id="details" placeholder="Write your review" rows = "5" cols = "60" name = "review"></textarea>
+
           <input type="hidden" name= "albumId" value=<%= albumId %>>
           <button type="submit" class="submit-button">Submit</button>
         </form>

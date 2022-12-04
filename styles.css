@@ -398,7 +398,7 @@ select {
   font-size: 24px;
 }
 .review button {
-  width:100%;
+  width:50%;
   height: 50px;
   margin-bottom: 50px;
   border: none;
@@ -429,7 +429,20 @@ select {
   padding-left: 5%;
   padding-right: 5%;
 }
-.review input{
+.review input, textarea{
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  height: 40px;
+  font-size: 18px;
+  border-style: solid;
+  background: rgb(32, 32, 32);
+  color: white;
+  outline: none;
+}
+.review textarea{
+  height: 200px;
+  font-family: "Lato", sans-serif;
 }
 
 /* 
