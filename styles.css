@@ -501,10 +501,14 @@ select {
 }
 
 .rating > label {
+  float: right;
+  display: inline;
   padding: 0;
   margin: 0;
+  position: relative;
+  width: 1.1em;
   cursor: pointer;
-  color: white;
+  color: #000;
 }
 
 .rating > label:hover,
