@@ -490,3 +490,13 @@ select {
   left: 0;
   color: #FFD700;
 }
+
+/*
+--- Form styling ---
+*/
+.list-all-customers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+}
