@@ -122,7 +122,7 @@
           <label for="details">Add a written review</label><br>
           <textarea id="details" rows = "5" cols = "60" name = "review"></textarea><br>
           <input type="hidden" name= "albumId" value=<%= albumId %>>
-          <input name="Submit" type="submit">
+          <button type="submit" class="submit-button">Submit</button>
         </form>
       </div>
       <!-- View all the past reviews -->

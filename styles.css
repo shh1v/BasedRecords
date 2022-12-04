@@ -367,7 +367,7 @@ select {
   color: rgb(30, 30, 30);
 }
 /* 
---- PRODUCT (Displaying the info of each product) ---
+--- PRODUCT AND REVIEW (Displaying the info of each product, and their review below) ---
 */
 .product-name h1 {
   color: white;
@@ -389,7 +389,6 @@ select {
 .album-information p {
   margin: 10px;
 }
-
 .review {
   display: flex;
   align-items: center;
@@ -397,9 +396,8 @@ select {
   color: white;
   margin-top: 20px;
 }
-
-.review-form button {
-  width: 100%;
+.review button {
+  width:100%;
   height: 50px;
   margin-bottom: 50px;
   border: none;
@@ -409,6 +407,12 @@ select {
   outline: none;
   cursor: pointer;
 }
+.review button:hover {
+  background-color: #f6cf00;
+}
+
+
+
 /* 
 --- LOGGED IN (after "if") ---
 */
