@@ -92,5 +92,7 @@
             <a href="resetdatabase.jsp"><h1>Reset Database</h1></a>
     
       </div>
+
+    
   </body>
 </html>
