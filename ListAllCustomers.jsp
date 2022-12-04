@@ -42,6 +42,12 @@
     </div>
 
     <%
+    // Check if user is logged in
+    if (session.getAttribute("customerId") == null) {
+        response.sendRedirect("account.jsp?redirect=listallcustomers.jsp");
+        return; // So that no attempt is made to run the rest of the file
+    }
+
     getConnection();
 
     Statement database = con.createStatement();
