@@ -24,7 +24,11 @@ String rating = request.getParameter("rating");
 String title = request.getParameter("title");
 String review = request.getParameter("review");
 String message = null;
-
+// If the user ius not logged in
+if (session.getAttribute("customerId") == null) {
+    response.sendRedirect("account.jsp?redirect=product.jsp?albumId=" + albumId);
+    return; // So that no attempt is made to run the rest of the file
+}
 // Check is the customer has purchased the product or not.
 boolean hasPurchased = false, hasReviewed = false;
 
