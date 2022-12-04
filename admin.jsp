@@ -92,5 +92,9 @@
             <a href="resetdatabase.jsp"><h1>Reset Database</h1></a>
     
       </div>
+
+      <div class="end-cart-options">
+        <a href="warehouse.jsp"><h1>WAREHOUSE </h1></a>
+        </div>
   </body>
 </html>
