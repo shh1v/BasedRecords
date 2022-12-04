@@ -1,51 +1,51 @@
 <%@ page import="java.sql.*" %>
-	<%@ page import="java.text.NumberFormat" %>
-		<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8" %>
-			<!DOCTYPE html>
-			<html>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8" %>
+<!DOCTYPE html>
+<html>
 
-			<head>
-				<meta charset="UTF-8" />
-				<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-				<title>Based Records</title>
-				<!-- Stylesheet -->
-				<link rel="stylesheet" href="styles.css" />
-				<!-- Font links -->
-				<link rel="preconnect" href="https://fonts.googleapis.com" />
-				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-				<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
-					rel="stylesheet" />
-			</head>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Based Records</title>
+	<!-- Stylesheet -->
+	<link rel="stylesheet" href="styles.css" />
+	<!-- Font links -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+		rel="stylesheet" />
+</head>
 
-			<body>
+<body>
 
-				<!-------------------------------->
-				<!-- HEADER (Logo & Navigation) -->
-				<!-------------------------------->
-				<div class="header">
-					<div class="navbar">
-						<div class="logo">
-							<a href="index.jsp">
-								<img src="Assets/Based Records Logo.png" width="400px" />
-							</a>
-						</div>
-						<nav>
-							<ul>
-								<li><a href="index.jsp">Home</a></li>
-								<li><a href="index.jsp#records">Shop</a></li>
-								<li><a href="listorder.jsp">Orders</a></li>
-								<li><a href="account.jsp">
-										<%= session.getAttribute("userid")==null ? "Login" :
-											session.getAttribute("userid") %>
-									</a></li>
-							</ul>
-						</nav>
-						<a href="cart.jsp">
-							<img src="Assets/shopping-cart.png" width="40px" height="40px" />
-						</a>
-					</div>
-				</div>
+	<!-------------------------------->
+	<!-- HEADER (Logo & Navigation) -->
+	<!-------------------------------->
+	<div class="header">
+		<div class="navbar">
+			<div class="logo">
+				<a href="index.jsp">
+					<img src="Assets/Based Records Logo.png" width="400px" />
+				</a>
+			</div>
+			<nav>
+				<ul>
+					<li><a href="index.jsp">Home</a></li>
+					<li><a href="index.jsp#records">Shop</a></li>
+					<li><a href="listorder.jsp">Orders</a></li>
+					<li><a href="account.jsp">
+							<%= session.getAttribute("userid")==null ? "Login" :
+								session.getAttribute("userid") %>
+						</a></li>
+				</ul>
+			</nav>
+			<a href="cart.jsp">
+				<img src="Assets/shopping-cart.png" width="40px" height="40px" />
+			</a>
+		</div>
+	</div>
 
 				<div class="heading">
 					<h1>Order List</h1>

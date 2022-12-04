@@ -93,8 +93,6 @@
     
       </div>
 
-      <div class="end-cart-options">
-        <a href="warehouse.jsp"><h1>WAREHOUSE </h1></a>
-        </div>
+    
   </body>
 </html>
