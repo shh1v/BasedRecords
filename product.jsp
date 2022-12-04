@@ -100,7 +100,6 @@
         %>
       <div class="review">
         <form method="get" action="addreview.jsp">
-          <label for="rating">Add an Overall Rating</label><br>
           <div class="rating">
             <input id="star5" name="rating" type="radio" value="5" class="radio-btn hide" />
             <label for="star5">☆</label>
@@ -114,26 +113,27 @@
             <label for="star1">☆</label>
             <div class="clear"></div>
             </div>
-          <label for="headline">Add a headline</label><br>
-          <input id="headline" type="text" name="title"><br>
+          <label for="headline">Add a headline</label>
+          <input id="headline" type="text" name="title">
 
-          <label for="details">Add a written review</label><br>
-          <textarea id="details" rows = "5" cols = "60" name = "review"></textarea><br>
+          <label for="details">Add a written review</label>
+          <textarea id="details" rows = "5" cols = "60" name = "review"></textarea>
           <input type="hidden" name= "albumId" value=<%= albumId %>>
           <button type="submit" class="submit-button">Submit</button>
         </form>
       </div>
       <!-- View all the past reviews -->
-      <div class="review">
+      <div class="previous-reviews-header">
         <h2>Previous Reviews</h2>
-        </div>
-        <div>
+      </div>
+      <!-- Start of the reviews -->
+      <div class="previous-reviews">
         <%
         String SQL = "SELECT * FROM review JOIN customer on review.customerId = customer.customerId WHERE albumId=?";
         PreparedStatement pstmt = con.prepareStatement(SQL);
         pstmt.setString(1, albumId);
         ResultSet rslt = pstmt.executeQuery();
-        out.println("<table>");
+        
         while (rslt.next()) {
           String customerName = String.format("%s %s", rslt.getString("firstName"), rslt.getString("lastName"));
           int reviewRating = rslt.getInt("reviewRating");
@@ -144,13 +144,20 @@
           for (int i = reviewRating ; i < 5 ; i++) {
             RatingString.append("✰");
           }
+
+          out.println("<table>");
+
           String reviewTitle = rslt.getString("reviewTitle");
           String reviewDesc = rslt.getString("reviewComment");
-          out.println("<tr><td>" + customerName + "</td><td></td></tr>");
-          out.println("<tr><td>" + RatingString.toString() + "</td><td>" + reviewTitle + "</td></tr>");
+          out.println("<tr><td>" + customerName + "</td></tr>");
+          out.println("<tr><td>" + RatingString.toString() + "</td></tr>");
+          out.println("<tr><td>" + reviewTitle + "</td></tr>");
           out.println("<tr><td>" + reviewDesc + "</td></tr>");
+
+          out.println("</table>");
+          
         }
-        out.println("</table>");
+        
         closeConnection();
         %>
       </div>  
