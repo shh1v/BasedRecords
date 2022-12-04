@@ -414,7 +414,10 @@ select {
 .previous-reviews-header{
   color: white;
   text-align: center;
-  margin-top: 20px;
+  margin: 40px;
+}
+.review h2{
+  margin-top: 30px;
 }
 .previous-reviews {
   color: white;
@@ -478,49 +481,53 @@ select {
 }
 
 /*
---- Form styling ---
+--- Star shit styling ---
 */
 .txt-center {
-  text-align: center;
+    text-align: center;
 }
 .hide {
-  display: none;
+    display: none;
 }
 
 .clear {
-  float: none;
-  clear: both;
+    float: none;
+    clear: both;
 }
 
 .rating {
-  width: 140px;
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  text-align: center;
-  position: relative;
+    width: 140px;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+    position: relative;
 }
 
 .rating > label {
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  color: white;
+    float: right;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 1.1em;
+    cursor: pointer;
+    color: white;
 }
 
 .rating > label:hover,
 .rating > label:hover ~ label,
 .rating > input.radio-btn:checked ~ label {
-  color: transparent;
+    color: transparent;
 }
 
 .rating > label:hover:before,
 .rating > label:hover ~ label:before,
 .rating > input.radio-btn:checked ~ label:before,
 .rating > input.radio-btn:checked ~ label:before {
-  content: "\2605";
-  position: absolute;
-  left: 0;
-  color: #FFD700;
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    color: #FFD700;
 }
 
 /*
