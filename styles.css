@@ -504,6 +504,7 @@ select {
 }
 
 .rating > label {
+<<<<<<< HEAD
     float: right;
     display: inline;
     padding: 0;
@@ -512,6 +513,16 @@ select {
     width: 1.1em;
     cursor: pointer;
     color: white;
+=======
+  float: right;
+  display: inline;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  width: 1.1em;
+  cursor: pointer;
+  color: #000;
+>>>>>>> fa174876be108dd881d9042febafee6c2fd278c6
 }
 
 .rating > label:hover,
